@@ -1,5 +1,5 @@
 ---
-title: "Milk Consumption and Production in the United States: An Empirical Analysis"
+title: "Milk consumption and production in the United States: A proposal for an Empirical Analysis"
 author: "Prasanga Paudel"
 format:
   html:
@@ -12,56 +12,55 @@ format:
 ---
 
 
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(here)
+```
+
 # Introduction
 
+Milk and dairy products are an important component of American diet, consumed at breakfast, lunch, dinner, snacks, and used in numerous processed foods. Dairy products supply key nutrients and contribute significantly to public health and nutrition. At the same time, dairy sector also represents a significant portion of US agricultural output. Given it’s importance to nutrition and economy, understanding the determinants of milk consumption and production is crucial for policy makers, producers, and other market stakeholders.
 
-Milk and dairy products are an important component of American diet, consumed at breakfast, lunch, dinner, snacks, and used in numerous processed foods. Dairy products  supply key nutrients and contribute significantly to public health and nutrition. At the same time, dairy sector also represents a significant portion of US agricultural output. Given it’s importance to nutrition and economy, understanding the determinants of milk consumption and production is crucial for policy makers, producers, and other market stakeholders. 
-
-Using the historical data on milk based on United States Department of Agriculture (USDA) dataset and National Agricultural Statistics Service (NASS), specifically looking into the patterns in milk characteristics, milk production, and consumption, we will estimate the demand and supply relationship for milk in the United States over the past several decades. This study will try to investigate the relationship between milk prices, dairy costs, milk production, as well as try to understand the dynamic relation between changes in milk production, milk consumption and milk prices. Reports from Economic Research Service (ERS) show that per-person per-day fluid cow milk consumption has declined from 0.78 cups/day in 1990 to 0.49 cups/day in 2019 (Stewart et al., 2021). Recent studies such as (Cornelisse, 2023) also show that while consumption of fluid milk has decreased, consumption of processed dairy products has increased substantially.
+Using the historical data on milk based on United States Department of Agriculture (USDA) dataset and National Agricultural Statistics Service (NASS), specifically looking into the patterns in milk characteristics, milk production, and consumption, we will estimate the demand and supply relationship for milk in the United States over the past several decades. This study will try to investigate the relationship between milk prices, dairy costs, milk production, as well as try to understand the dynamic relation between changes in milk production, milk consumption and milk prices. Reports from Economic Research Service (ERS) show that per-person per-day fluid cow milk consumption has declined from 0.78 cups/day in 1990 to 0.49 cups/day in 2019 [@stewart2021competition]. Recent studies such as [@cornelisse_dairy_2023] also show that while consumption of fluid milk has decreased, consumption of processed dairy products has increased substantially.
 
 We are seeking the answers to our two primary research question:
 
-1.	How sensitive is fluid consumption to changes in the price of milk? 
-(This is basically the price elasticity of demand of milk and milk products.)
+1.  How sensitive is fluid consumption to changes in the price of milk? (This is basically the price elasticity of demand of milk and milk products.)
 
-2.	How do milk prices and feed costs affect aggregate milk production?
-(This is basically the price elasticity of supply and feed price elasticity.)
+2.  How do milk prices and feed costs affect aggregate milk production? (This is basically the price elasticity of supply and feed price elasticity.)
 
- These questions have both industrial and theoretical relevance. We as economists mostly assume that food is inelastic in demand, and through this research we would like to test this statement. Better understanding of this elasticity will inform us on how to orient our tax and subsidy policies. It can also guide investment decisions and improve market efficiency.
-
-
+These questions have both industrial and theoretical relevance. We as economists mostly assume that food is inelastic in demand, and through this research we would like to test this statement. Better understanding of this elasticity will inform us on how to orient our tax and subsidy policies. It can also guide investment decisions and improve market efficiency.
 
 # Literature Review
 
 The demand of fluid milk and other dairy products in the United States has been tried numerous times to be quantified and analyzed in various empirical studes since long ago. Some earlier and recent studies on milk have shown that milk products exhibit inelastic characteristics although variation can be observed within different markets, methods and product specification.
 
-A recent study by (Gan, 2022) using state-level data and an instrumental variable approach  found that demand for conventional milk remain inelastic even with the growing trends of milk product diversification. Similarly, an analysis of Demand Elasticities for Fluid Milk Products in the U.S. by (Davis et al., 2009) used the data from Nielsen Homescan from 2005 and estimated the demand for different categories of milk products available in the market including whole milk, reduced milk, flavoured milk, buttermilk, etc . Then using a censored translog demand system they found that own-price elasticities of these fluid milk categories are greater than unity (i.e these products show elastic demand), however, reduced fat-milk was found to have a compensated demand elasticity less than one. These results from (Davis et al., 2009) are somewhat contrasting to the conventional expectation that milk being from a staple food category would show an inelastic demand. However, the authors from this research also discuss how aggregation across all types of fluid milk alternatives can mask heterogeneity with some categories such as flavoured milk and low-fat milk responding more to price changes than others.
+A recent study by [@gan2022estimation] using state-level data and an instrumental variable approach found that demand for conventional milk remain inelastic even with the growing trends of milk product diversification. Similarly, an analysis of Demand Elasticities for Fluid Milk Products in the U.S. by [@davis2011assessing] used the data from Nielsen Homescan from 2005 and estimated the demand for different categories of milk products available in the market including whole milk, reduced milk, flavoured milk, buttermilk, etc . Then using a censored translog demand system they found that own-price elasticities of these fluid milk categories are greater than unity (i.e these products show elastic demand), however, reduced fat-milk was found to have a compensated demand elasticity less than one. These results from [@davis2011assessing] are somewhat contrasting to the conventional expectation that milk being from a staple food category would show an inelastic demand. However, the authors from this research also discuss how aggregation across all types of fluid milk alternatives can mask heterogeneity with some categories such as flavoured milk and low-fat milk responding more to price changes than others.
 
-If we look at the industry, it has gone through a significant consolidation and changes over the recent decades. According to a report by (CRS, 2025), the Congressional Research Service (CRS), milk production in the US has increased by around 33% from 2003 to 2024 even with the number of licensed dairy herds declining by about 65% during the same period indicating a tendency towards fewer and larger farms and increased cows per herds. These changes raises an interesting question whether decline in fluid milk demand would reduce farm-level demand elasticity as processed dairy products continue to rise in numbers. With larger shares of milk diverted to value added products and processed milk items rather than beverage consumption, complications in the simple supply-demand models may arise. 
+If we look at the industry, it has gone through a significant consolidation and changes over the recent decades. According to a report by [@crs_us_2025], the Congressional Research Service (CRS), milk production in the US has increased by around 33% from 2003 to 2024 even with the number of licensed dairy herds declining by about 65% during the same period indicating a tendency towards fewer and larger farms and increased cows per herds. These changes raises an interesting question whether decline in fluid milk demand would reduce farm-level demand elasticity as processed dairy products continue to rise in numbers. With larger shares of milk diverted to value added products and processed milk items rather than beverage consumption, complications in the simple supply-demand models may arise.
 
-There has been recent developments in the field of demand modelling with methods such as hedonic metric approach being introduced to estimate the demand for these types of differentiated products. In fact, a recent study by (Gulseven & Wohlgenant, 2020) utilizes this approach to retail milk demand to model demand across differentiated milk products including fluid milk, low-fat milk, etc. This study considered the multidimensional attibutes of these products such as fat content, price, packaging to estimate elasticities across rather than treating milk as homogenous.
+There has been recent developments in the field of demand modelling with methods such as hedonic metric approach being introduced to estimate the demand for these types of differentiated products. In fact, a recent study by [@gulseven2020hedonic] utilizes this approach to retail milk demand to model demand across differentiated milk products including fluid milk, low-fat milk, etc. This study considered the multidimensional attibutes of these products such as fat content, price, packaging to estimate elasticities across rather than treating milk as homogenous.
 
-All these studies show that demand elasticity estimates can vary significantky across aggregation and the methods used for estimation. There has been studies on the supply sides as well with numerous studies considering to answer how input costs (feed, hay, energy) affect the milk production decisions. A recent study by (Hatzenbuehler et al., 2021) examined how the expansion of dairy industries in states including California, Idaho, and New Mexico affect the responsiveness of milk production to hay feed prices. It was found that expansion of dairy sector increases the hay-to-milk price responsiveness implying that any fluctuations in feed price would significantly influence production decisions.
+All these studies show that demand elasticity estimates can vary significantky across aggregation and the methods used for estimation. There has been studies on the supply sides as well with numerous studies considering to answer how input costs (feed, hay, energy) affect the milk production decisions. A recent study by [@hatzenbuehler2021change] examined how the expansion of dairy industries in states including California, Idaho, and New Mexico affect the responsiveness of milk production to hay feed prices. It was found that expansion of dairy sector increases the hay-to-milk price responsiveness implying that any fluctuations in feed price would significantly influence production decisions.
 
 Given these diversified findings and changing structure of dairy market over the recent years, we have a strong motivation to reexamine the demand supply relationships and their intricate details with new and updated data.
-
 
 # Data
 
 Our research will primarily rely on the public database from the USDA through the ERS dairy-data portal. We will utilize the “US milk production and related data” dataset to answer our production related research questions. This particular database includes annual and quarterly information on milk production, herds numbers, milk per cow, and related supply-side variables such as feed prices, ration costs, milk price at farm, etc. For demand side information on per capita consumption of the dairy products we can rely on “Dairy products: Per capita consumption, United States” dataset. Apart from these datasets we also have access to other information through various national and household surveys.
 
-
 # Methodology
 
 Our analysis will be based on the grounds of classical microeconomic supply-demand concepts. For the demand side, we assume that the consumers of the milk and milk products maximize their utility subject to their budget constraint. For any increase in price, they are expected to reduce their demand for milk and milk products, ceteris paribus. Since milk is a staple food, it’s elasticity is assumed to be inelastic as suggested by the economic theories. This inelastic demand practically implies that a percentage change in the price of milk or milk products brings about a smaller magnitude change in the quantity demanded of that product. Similarly, on the supply side, the farmers or the producers are expected to decide their production strategy based on their profit maximization criteria. The production of milk at farm level depends on the input costs (cost of feed, labor, etc), market price of milk, and also the production technology as our theory suggests. Production technology at farm level would imply milk yield per cow, milking and feeding mechanisms, etc.
 
+Due to the structure of the dairy market in the US, we can simplify the overall market structure of demand as, the supply of milk from the farm is based on a derived demand from the dairy manufacturing companies ( sectors that produce cheese, butter, yogurt, etc) in addition to the demand for beverage milk. It looks obvious that any change in demand for the processed milk products would can influence the demand for farm milk. Due to limited substitution possibilities at farm-input level, the elasticity of demand tends to be less elastic, and reports such as [@zhang2018demand] suggest that demand for farm milk in dairy manufacturing has stayed fairly inelastic.
 
-Due to the structure of the dairy market in the US, we can simplify the overall market structure of demand as, the supply of milk from the farm is based on a derived demand from the dairy manufacturing companies ( sectors that produce cheese, butter, yogurt, etc) in addition to the demand for beverage milk. It looks obvious that any change in demand for the processed milk products would can influence the demand for farm milk. Due to limited substitution possibilities at farm-input level, the elasticity of demand tends to be less elastic, and reports such as (Zhang & Alston, 2018) suggest that demand for farm milk in dairy manufacturing has stayed fairly inelastic.
-
-Finally, we will specify a log-log specification for our regression model which gives us our desired information on elasticities. We can also use a more advanced model with time-series data but for the simplicity of our research, we will be based on OLS. 
-
+Finally, we will specify a log-log specification for our regression model which gives us our desired information on elasticities. We can also use a more advanced model with time-series data but for the simplicity of our research, we will be based on OLS.
 
 ## Demand Model
+
 
 Let’s specify our demand model first:
 
@@ -70,18 +69,18 @@ $log(Q_t)$ = $β_0$ + $β_1$ $P_t^{feed}$ + $e_t$
 Where,
 
 $Q_t$ = per capita fluid milk consumption in year t (pounds/person)
+
 $P_t$ = average farm milk price (or retail price) in year t
 
 $β_1$ is the own price elasticity of demand for fluid milk representing the percentage change in quantity demanded given a 1% change in price.
 
-While recent studies such as (Davis et al., 2011) suggest that own price elasticity for many fluid milk categories are less than one, older studies such as (Gould et al., 1990) have shown that whole or low-fat milk show elasticities in the range of -0.3 to -0.8 depending on the fat content and milk type. (Gan, 2022) also found demand to be inelastic.
+While recent studies such as [@davis2011assessing] suggest that own price elasticity for many fluid milk categories are less than one, older studies such as [@gould_demand_1990] have shown that whole or low-fat milk show elasticities in the range of -0.3 to -0.8 depending on the fat content and milk type. [@gan2022estimation] also found demand to be inelastic.
 
 Given that our data will incorporate a wide range of data including the most recent ones as well as other past decades, we expect that our data might provide us with different results and variability.
 
-Additionally, to control for endogeneity that arises from the simultaneous determination of prices and quantities in the market, we will also use Instrument Variable (IV) approach for the coefficient estimation. We will use feed price $P_t^{feed}$ to determine the average farm milk price $(P_t)$ 
+Additionally, to control for endogeneity that arises from the simultaneous determination of prices and quantities in the market, we will also use Instrument Variable (IV) approach for the coefficient estimation. We will use feed price $P_t^{feed}$ to determine the average farm milk price $(P_t)$
 
 $log(P_t)$ = $π_0$ + $π_1$ $P_t^{feed}$ + $e_t$
-	
 
 ## Supply Model
 
@@ -91,60 +90,81 @@ $log(S_t)$ = $a_0$ + $a_1$ $P_t^{milk}$ +$a_2$ $P_t^{feed}$ + $e_t$
 
 Where,
 
-$S_t$ = aggregate milk production in pounds (total production)  in year t
+$S_t$ = aggregate milk production in pounds (total production) in year t
+
 $P_t^{milk}$ = average farm milk price in year t
-$P_t^{feed}$ = price of dairy cow ration (feed cost )  in year t
+
+$P_t^{feed}$ = price of dairy cow ration (feed cost ) in year t
 
 $α_1$ measures the supply elasticity with respect to the price of the milk representing the responsiveness of producers to the change in output price.
 
 $α_2$ measures the feed cost elasticity representing how the change in input costs affect the output. If feed cost reduces profitability then a negative sign is expected, however if feed cost reflects a better quality feed and better quality output, the relationship can become more complex.
 
-We will also use the IV approach for the determination of our supply equation, with policy shocks (Policy) as instrument for $P_t^{milk}$. $P_t^{feed}$.
+We will also use the IV approach for the determination of our supply equation, with policy shocks (Policy) as instrument for $P_t^{milk}$.
 
-$log_t^{milk}$ = $π_0$ + $π_1$Policy + $π_2$ FP + $e_t$
-
+$log_t^{milk}$ = $π_0$ + $π_1$PolicyShocks + $π_2$ $P_t^{feed}$  + $e_t$
 
 Studies on input demand in dairy manufacturing industries have shown that milk as in input has one of the lowest own-price elasticity in processing industries, suggesting that derived demand for milk is relatively inelastic.
 
 The simple log-log model in both our equations reflect the basic economics theory of supply and demand with a constant elasticity assumption. These models are widely used in agricultural economics research. Our use of per-capita consumption for fluid milk tries to approximates the average consumer behaviour at macro level, while our milk production aggregated nationally approximates a representative producer sector. We do lose some heterogeneity while looking things as aggregagate level. Acknowledging the technological progress and shift in market pattern over the decades, we will also introduce “decade” as a control variable itself for further robustness of our result.
 
-
 # Expected Results
 
 In this section, we try to present the expected result in our regression models. This result is obtained based on simulated observations and do not represent the actual truth. However, using this simulated data, we can make valuable prediction of what our research would shape into. We have predicted the changes in elasticities and the effects based on our understanding and results from previous research.
 
-
 ## Milk Demand
 
-Table 1: This table represents the expected regression result of demand equation
-	
-
-The coefficient on log price, (–0.46) implies that a 1% increase in milk price decreases fluid milk consumption by about 0.46%. Demand is inelastic (|–0.46| < 1), consistent with milk being a staple food product. R² value of 0.62 implies  about 62% of variation in consumption explained by price, plausible given omitted factors (income, demographics, substitutes).
 
 
+| Variable    | Coeff | Std. Err | t-val | p-val   |
+|-------------|-------|----------|-------|---------|
+| Intercept   | 4.42  | 0.13     | 33.5  | \<0.001 |
+| Log price   | -0.46 | 0.07     | -6.41 | \<0.001 |
+| Observation | 40    |          |       |         |
+| $R^2$       | 0.62  |          |       |         |
+
+: This table represents the expected regression result of demand equation
+
+The coefficient on log price, (–0.46) implies that a 1% increase in milk price decreases fluid milk consumption by about 0.46%. Demand is inelastic (\|–0.46\| \< 1), consistent with milk being a staple food product. R² value of 0.62 implies about 62% of variation in consumption explained by price, plausible given omitted factors (income, demographics, substitutes).
+
+## Milk Supply
 
 
-## Milk Supply		
+| Variable       | Coeff | Std. Err | t-val | p-val   |
+|----------------|-------|----------|-------|---------|
+| Intercept      | 26.86 | 0.17     | 155.2 | \<0.001 |
+| Log price      | 0.24  | 0.15     | 1.58  | 0.12    |
+| Log feed price | 0.20  | 0.08     | 2.38  | 0.02    |
+| Observation    | 40    |          |       |         |
+| $R^2$          | 0.62  |          |       |         |
 
-Table 2: This table represents the expected regression result of the supply equation.
-
+: This table represents the expected regression result of the supply equation.
 
 The coefficient on log price, (0.24) implies that a 1% increase in milk price increases production by 0.24%, but not statistically significant which is plausible for annual national data. Supply elasticity is less than 1, so production responds less than proportionally to price, reflecting technological and biological limits to expansion.
 
-The demand in 1980 was less elastic due to lesser substitutes and the overall demand was high due to high per capita fluid milk consumption. Compared to 1980, the present demand curve is more elastic and the overall quantity demended in the market has also dropped significantly. On the supply side, prices were higher due to less efficient farms and higher production costs in 1980. 
+The demand in 1980 was less elastic due to lesser substitutes and the overall demand was high due to high per capita fluid milk consumption. Compared to 1980, the present demand curve is more elastic and the overall quantity demended in the market has also dropped significantly. On the supply side, prices were higher due to less efficient farms and higher production costs in 1980.
 
-
-
+```{r}
+#| label: fig-shift-in-demand-and-supply
+#| fig-cap: "This figure shows the relative shift in supply and demand during 1980's and 2020"
+#| echo: FALSE
+knitr::include_graphics(here::here("pricetheory-exercise", "shift in demand and supply.png"))
+```
 
 Due to the technological progress (better milking machines, better veterinary care, better animal breeding) and commercialized way of farming, the production cost for a gallon of milk has reduced and we have a flatter (elastic) supply curve as producers can quickly adjust to price changes.
 
+```{r}
+#| label: fig-milk-elasticity
+#| fig-cap: "This figure shows the gradual changes in elasticities in demand and supply due to technological progress and changes in consumption patterns."
+#| echo: FALSE
+knitr::include_graphics(here::here("pricetheory-exercise", "milk elasticity history.png"))
+```
 
 # Discussion
 
-As we observed, the negative and inelastic elasticity (–0.46) confirms that the U.S. fluid milk consumption is relatively insensitive to price changes. This result is consistent with its role as a household necessity and a staple food. During the last century, demand has shifted to the left, which represents the changing consumption pattern with consumers willing to buy less milk (due to dietary shifts, substitutes, and health concerns) at the same price. The demand curve in 2020 is also flatter implying that modern consumers are relatively more price-sensitive than in the 1980s (elasticity maybe –0.6 today vs –0.3 historically). This can be justified by the availability of more substitutes in the market now, than what was present during the 1980’s. Milk was a necessity for nutrition and minerals in the past, but the current market has different vitamins and mineral supplements negating the necessity for fluid milk. 
+As we observed, the negative and inelastic elasticity (–0.46) confirms that the U.S. fluid milk consumption is relatively insensitive to price changes. This result is consistent with its role as a household necessity and a staple food. During the last century, demand has shifted to the left, which represents the changing consumption pattern with consumers willing to buy less milk (due to dietary shifts, substitutes, and health concerns) at the same price. The demand curve in 2020 is also flatter implying that modern consumers are relatively more price-sensitive than in the 1980s (elasticity maybe –0.6 today vs –0.3 historically). This can be justified by the availability of more substitutes in the market now, than what was present during the 1980’s. Milk was a necessity for nutrition and minerals in the past, but the current market has different vitamins and mineral supplements negating the necessity for fluid milk.
 
-The positive supply elasticity (0.24) stands for the fact that higher milk prices induce higher output. But, despite this, the magnitude shows that the milk supply is relatively inelastic as farmers can’t instantly scale herds or output due to biological and capital constraints. Feed costs have been observed to be positively correlated with production because with the advancement in science and technology in the modern era, modern feed costs reflect better-quality nutrition and efficiency improvements. For instance, cattle fed with fresh natural grasses, reared in an open farmland will yield milk that is sold as organic premium product with premium price tags.  In earlier decades, the same coefficient might have been negative.
-
+The positive supply elasticity (0.24) stands for the fact that higher milk prices induce higher output. But, despite this, the magnitude shows that the milk supply is relatively inelastic as farmers can’t instantly scale herds or output due to biological and capital constraints. Feed costs have been observed to be positively correlated with production because with the advancement in science and technology in the modern era, modern feed costs reflect better-quality nutrition and efficiency improvements. For instance, cattle fed with fresh natural grasses, reared in an open farmland will yield milk that is sold as organic premium product with premium price tags. In earlier decades, the same coefficient might have been negative.
 
 # Conclusion and Policy implication
 
@@ -152,102 +172,4 @@ This study analyzed the determinants of milk consumption and production in the U
 
 The results and findings from our research will carry great implication for U.S agriculture and food sector. Given the inelastic nature of fluid milk demand, price intervention through taxes and subsidies are unlikely to produce large changes in the consumer behavior. To stabilize the consumption on the demand side, stakeholders can focus on product innovation and marketing diversification. Furthermore, the increasing stratification within the dairy market and divergence from the consolidated demand and supply approach underscores the importance of supply chain adaptation and the need for more research in the dairy sector.
 
-
-```{r}
-# -------------------------------
-# Simulating Milk Demand & Supply
-# -------------------------------
-
-library(ggplot2)
-library(dplyr)
-
-set.seed(123)
-
-# Define price range (in dollars per pound)
-price <- seq(0.10, 0.30, by = 0.005)
-
-# Earlier years (1980)
-demand_1980 <- 10 - 20 * price    # downward sloping demand
-supply_1980 <- -2 + 40 * price    # upward sloping supply
-
-# Recent years (2020s)
-demand_2020 <- 7 - 25 * price
-supply_2020 <- -3 + 50 * price
-
-# Combine into one data frame
-df <- data.frame(
-  price = rep(price, 4),
-  quantity = c(demand_1980, supply_1980, demand_2020, supply_2020),
-  curve = rep(c("Demand 1980", "Supply 1980", "Demand 2020", "Supply 2020"),
-              each = length(price))
-)
-
-# Compute equilibria analytically
-eq_1980 <- data.frame(
-  year = "1980",
-  price = (10 - (-2)) / (20 + 40),
-  quantity = 10 - 20 * ((10 - (-2)) / (20 + 40))
-)
-
-eq_2020 <- data.frame(
-  year = "2020",
-  price = (7 - (-3)) / (25 + 50),
-  quantity = 7 - 25 * ((7 - (-3)) / (25 + 50))
-)
-
-equilibria <- bind_rows(eq_1980, eq_2020)
-
-# -------------------------------
-# Plot Supply & Demand Shifts
-# -------------------------------
-
-ggplot(df, aes(x = quantity, y = price, color = curve)) +
-  geom_line(linewidth = 1.2) +
-  geom_point(data = equilibria, aes(x = quantity, y = price), size = 3, color = "black") +
-  geom_text(
-    data = equilibria,
-    aes(x = quantity + 0.5, y = price, label = paste("Eq.", year)),
-    size = 4,
-    hjust = 0,
-    inherit.aes = FALSE,   # <---- prevents inheriting color=curve mapping
-    color = "black"        # <---- sets static color for text
-  ) +
-  labs(
-    title = "Milk Market: Shifts in Demand and Supply (1980 vs 2020)",
-    x = "Quantity of Milk (billion pounds)",
-    y = "Price (dollars per pound)",
-    caption = ""
-  ) +
-  theme_minimal(base_size = 12)
-
-
-```
-
-
-
-
-```{r}
-# Simulate changing elasticities over time
-years <- seq(1980, 2025, by = 5)
-
-elasticity_df <- data.frame(
-  year = years,
-  demand_elasticity = -0.3 - 0.01 * (years - 1980) / 5,  # demand becomes more elastic
-  supply_elasticity = 0.2 + 0.015 * (years - 1980) / 5   # supply becomes more elastic
-)
-
-ggplot(elasticity_df, aes(x = year)) +
-  geom_line(aes(y = demand_elasticity, color = "Demand Elasticity"), linewidth = 1.2) +
-  geom_line(aes(y = supply_elasticity, color = "Supply Elasticity"), linewidth = 1.2) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  labs(
-    title = "Milk Market Elasticities (1980–2025)",
-    y = "Elasticity",
-    x = "Year",
-    caption = ""
-  ) +
-  scale_color_manual(values = c("Demand Elasticity" = "red", "Supply Elasticity" = "blue")) +
-  theme_minimal(base_size = 12)
-
-```
 

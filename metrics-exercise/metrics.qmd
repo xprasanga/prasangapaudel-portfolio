@@ -47,9 +47,6 @@ library(flextable)
 library(officer)
 ```
 
-**Authors**
-
--   Prasanga Paudel$^{1}$ (ORCID: 0000-0000-1234-5678)
 
 **Author affiliations**
 
@@ -76,7 +73,7 @@ _Keywords: customer behavior, promos, purchase frequency_
 
 Understanding about the dynamic consumer behaviour, specially the patterns underlying their repeated purchase is a key component to the success of any industry and business sector. Consumers sometimes act like creatures of habit, automatically repeating past behavior with little regard to current goals and valued outcomes [@Wood2009-qr]. Purchase and consumption behaviors in daily life often are repetitive and performed in customary places, leading consumers to develop habits [@Ji2007-te]. If a business firm manages to understand the reason behind why consumers act in certain way, then it might open a gateway into more consumer persuasion and increase in revenue. Studies on the effect of demographic factors (age, gender, income) on consumption and purchase frequency have been conducted repeatedly in the past. [@saleh2013impact] for instance, performed a cross-sectional study analyzing the effect of gender, age, and income on consumer’s purchasing responsiveness to free product samples. Results showed that young consumers and females tend to be more responsive to such promotions and income had an insignificant effect. On the other hand, a study by [@Ihsan_Ullah2021-gr] report that there is a weak or no relationship between consumer’s purchase decisions and their demographic attributes, depending on the context.
 
-Business are always trying to come up with new ideas to generate more revenue and profit, but not all attempts are equally fruitful. Promo coupons are also one of such widely used in service establishments, even though little is known about a coupon’s impact on consumer behavior [@Taylor2001-qy]. Recent studies show that coupons and promotions can significantly influence purchase behavior, particularly in prompting repeat or earlier-than-planned purchase decisions [@Balakrishnan2020-oi]. A recent study by [@Poisson2018-zg] studied the effectiveness of coupons on the restaurant consumers’ purchase decision and another study by [@Mishra2024-hd] studied  the impact of sales promotion on consumer buying behavior in the apparel industry. Digital era studies of online shoppers have also found that spending and purchase frequency often vary with age, income, and prior shopping patterns [@Kooti2015-us]. Similary, [@Hu2008-ao] argues that online reviews and rating affect the purchase of that product although it tends to diminish over time. One might think that purchase decisions are also influenced by the seasonal patterns of offers such as Black Friday, Cyber Monday, Summer sales, etc. Ignoring seasonal patterns in consumer’s expectations leads to biased demand estimates [@Soysal2012-le]. And while [@Iyengar2022-ze] report that subscription leads to increase in consumer purchases, two third of the effect is reported to be due to non-economic benefit of the subscription. On the other hand, critiques of subscription sales such as [@Chen2024-mq] argue that effect of subscription is endogenous and it may not always increase sales as there is also a common trend of enrolling into certain subscription just because of peer influence and not much motivation to purchase.
+Business are always trying to come up with new ideas to generate more revenue and profit, but not all attempts are equally fruitful. Promo coupons are also one of such widely used in service establishments, even though little is known about a coupon’s impact on consumer behavior [@Taylor2001-qy]. Recent studies show that coupons and promotions can significantly influence purchase behavior, particularly in prompting repeat or earlier-than-planned purchase decisions [@Balakrishnan2020-fz]. A recent study by [@Poisson2018-zg] studied the effectiveness of coupons on the restaurant consumers’ purchase decision and another study by [@Mishra2024-hd] studied  the impact of sales promotion on consumer buying behavior in the apparel industry. Digital era studies of online shoppers have also found that spending and purchase frequency often vary with age, income, and prior shopping patterns [@Kooti2015-us]. Similary, [@Hu2008-ao] argues that online reviews and rating affect the purchase of that product although it tends to diminish over time. One might think that purchase decisions are also influenced by the seasonal patterns of offers such as Black Friday, Cyber Monday, Summer sales, etc. Ignoring seasonal patterns in consumer’s expectations leads to biased demand estimates [@Soysal2012-le]. And while [@Iyengar2022-ze] report that subscription leads to increase in consumer purchases, two third of the effect is reported to be due to non-economic benefit of the subscription. On the other hand, critiques of subscription sales such as [@Chen2024-mq] argue that effect of subscription is endogenous and it may not always increase sales as there is also a common trend of enrolling into certain subscription just because of peer influence and not much motivation to purchase.
 
 There has been limited work combining a comprehensive set of determinants: demographic variables, purchase history, product attributes, incentives, and seasonal/contextual factors in a single model to explain purchase frequency. Following their previous studies, we want to study various consumer behaviour with detailed insights into consumer responses and shopping patterns across various demographics, locations, and product categories.
 
@@ -85,15 +82,17 @@ There has been limited work combining a comprehensive set of determinants: demog
 Our broad objective is to empirically examine the effect of different socio-economic, demographic, and product related attributes on purchase frequency. We will evaluate and try to reject/validate behavioral and loyalty theories and try to provide data-supported guidance and retail strategies. We have the following specific objectives.
 
 •	To analyze the relationship between age, gender, item category, seasonality, income with purchase frequency.
+
 •	To assess whether behavioral history significantly predict current purchase frequency
+
 •	To investigate if subscription or use of promo codes is associated with a higher purchase frequency.
 
 
 # Data source
 
-The “Consumer Behavior and Shopping Habits” dataset that we will be using can provide us with information crucial for market analysis and tailored marketing strategies. The dataset consists of 16 variables and covers a dynamic range of consumer information from all over US. The total number of observations in our sample is 1120. 
+The “Consumer Behavior and Shopping Habits” dataset that we will be using can provide us with information crucial for market analysis and tailored marketing strategies. The dataset consists of 16 variables and covers a dynamic range of consumer information from all over US. The total number of observations in our sample is 1120.
 
-	The dataset includes information such as: 
+The dataset includes information such as:
 	
 - 	Customer demographics (age, gender, location, season)
 - 	Product details (item purchased, category)
@@ -130,117 +129,59 @@ We have the following options for estimation: OLS, OLS (with robust SE), IV-reg
 
 ## OLS Regression
 
-```{r}
+This is our base model where we assume that errors are normally distributed and our data do not suffer from heteroskedasticity and endogeneity. To verify that these assumptions are met, we will perform a test for normality, heteroskedasticity and endogeneity.
 
-# OLS regression (biased due to endogeneity)
-model_ols_sub <- lm(frequency_num ~ age + gender + item_fashion + amount + rating +
-                      subscribed + shipping + promo + prev_purchases +
-                      income + season,
-                    data=shopping_iv)
-summary(model_ols_sub)
+We test the following hypothesis using Shapiro-Wilk normality test for residual.
 
+Null Hypothesis $H_0$: The residuals are normally distributed.
 
-```
+Alternative Hypothesis $H_a$: The residuals are not normally distributed.
+
+We will also test the following hypothesis using Breuch-Pagan Heteroskedasticity test.
+
+Null Hypothesis $H_0$: The variance of the residuals is constant.
+
+Alternative Hypothesis  $H_1$: The variance of the residuals is not constant.
 
 
 ## Robust SE OLS
 
-```{r}
-robust_se <- coeftest(model_ols_sub, vcov = vcovHC(model_ols_sub, type = "HC1"))
+If our null hypothesis of “The residuals are normally distributed” is violated, we cannot trust our standard errors anymore, and therefore we will have to account for the heteroskedastic errors and calculate the heteroskedasticity robust standard errors. Then only we can trust the standard errors and thus the t-statistics.
 
-print(robust_se)
-```
+Finally, we will also test if we have a problem of endogeneity with our independent variables and we will try to solve it using the IV-regression. For our Instrument Variable approach, we will perform further test for endogeneity and test for weak instrument.
+
+We are suspicious that our variable subscription is an endogenous variable. Because, customers who buy more from a particular store tend to have a subscription in order to qualify for subscription discounts and special offers. Therefore, frequency of purchase and subscription are simultaneously determined. As endogeneity means that our OLS is biased and inconsistent, we may have to calculate the model using 2SLS approach as a correct approach to correct for endogeneity of subscription.
+
+In that case, let’s first define our 2SLS regression model with instrument: marketing offer for subscription enrollment.
+
+
+
 
 ## Two-stage Least Squares
 
 ### First stage
 
-```{r}
+In the first stage, we will regress the endogenous variable Suscription on all exogenous variables and the instrument variable MarketingOffer.
 
-first_stage <- lm(subscribed ~ marketing_offer + age + gender + item_fashion + amount + rating +
-                       + shipping + promo + prev_purchases +
-                      income + season,
-                    data=shopping_iv)
-summary(first_stage)
+$Suscription_i$ = $π_1$ + $π_2 Age_i$ + $π_3 Male_i$ + $π_4 Fashion_i$ + $π_5 Amount_i$ + $π_6 Rating_i$ + $π_7 MarketingOffer_i$ + $π_8 Shipping_i$ + $π_9 Promo$ + $π_{10} PreviousPurchase_i$ + $π_{11} Income_i$ + $π_{12} Spring_i$ + $π_{13} Summer_i$ + $π_{14} Winter_i$ + $μ_i$ 
 
 
-```
 
 
 ### Second stage or IV-reg
 
-```{r}
-# IV regression (2SLS) using marketing_offer as instrument for subscribed
-model_iv_sub <- ivreg(frequency_num ~ age + gender + item_fashion + amount + rating +
-                        subscribed + shipping + promo + prev_purchases +
-                        income + season
-                      | age + gender + item_fashion + amount + rating +
-                        shipping + promo + prev_purchases +
-                        income + season + marketing_offer,
-                      data=shopping_iv)
+In the second stage, we will use the predicted values of suscription from the first stage regression to substitute the original values of suscription which were endogenous. Basically, we just replace suscription with $ \widehat{Subscription}$ in our original OLS model.
 
-summary(model_iv_sub, diagnostics=TRUE)
+$Purchase Frequency_i$ = $β_1$ + $β_2 Age_i$ + $β_3 Male_i$ + $β_4 Fashion_i$ + $β_5 Amount_i$ + $β_6 Rating_i$ + $β_7 \widehat{Subscription}_i$ + $β_8 Shipping_i$ + $β_9 Promo$ + $β_{10} PreviousPurchase_i$ + $β_{11} Income_i$ + $β_{12} Spring_i$ + $β_{13} Summer_i$ + $β_{14} Winter_i$ + $μ_i$ 
 
 
-```
 
-Here we model heteroskedasticity as a function of purchase amount (a reasonable proxy)
+# Results
 
 
-# GLS 
+## Descriptive Statisctics
 
-```{r}
-
-# Fit a Generalized Least Squares (GLS) model
-
-gls_model <- gls(frequency_num ~ age + gender + item_fashion + amount + rating +
-                   subscribed + shipping + promo + prev_purchases +
-                   income + season,
-                 data = shopping_iv,
-                 weights = varExp(form = ~ amount))
-
-print(coef(summary(gls_model)), digits=4 )
-```
-
-# Model Diag 
-
-```{r}
-# -------------------------------
-# 2️⃣ Extract residuals and fitted values
-residuals_ols <- residuals(model_ols_sub)
-fitted_ols <- fitted(model_ols_sub)
-
-# -------------------------------
-# 3️⃣ Linearity & Homoskedasticity
-# Residuals vs Fitted plot
-plot(fitted_ols, residuals_ols,
-     xlab="Fitted Values", ylab="Residuals",
-     main="Residuals vs Fitted")
-abline(h=0, col="red")
-
-# Breusch-Pagan test for heteroskedasticity
-bptest(model_ols_sub)
-# p-value > 0.05 → homoskedasticity not rejected
-
-# -------------------------------
-# 4️⃣ Normality of residuals
-# QQ plot
-qqnorm(residuals_ols)
-qqline(residuals_ols, col="red")
-
-# Shapiro-Wilk test
-shapiro.test(residuals_ols)
-# p-value > 0.05 → residuals approx normal
-
-# -------------------------------
-# 5️⃣ Multicollinearity
-vif_values <- vif(model_ols_sub)
-vif_values
-# VIF > 5 → moderate multicollinearity
-# VIF > 10 → severe multicollinearity
-
-```
-
+The total number of observation is 1120. Our samples consists of individuals above 18 years and below 67 years. A brief description of our variables is given in the following table.
 
 ```{r}
 
@@ -264,7 +205,7 @@ desc_stats <- desc_stats[, c("Variable", "mean", "sd", "min", "max", "median", "
 print(desc_stats)
 ```
 
-
+We also performed the Pearson correlation test to observe the correlation among our independent variables. We observe low and modest correlation among the variables suggesting that our model will not face the problem of multicollinearity.
 
 ```{r}
 
@@ -293,3 +234,168 @@ print(corr_plot)
 ```
 
 
+As discussed, we performed three different estimations, mainly OLS (Ordinary Least Squares), OLS with robust standard errors, and instrumental variable approach (2SLS-IV regression). The performance of the estimators and the obtained results will be discussed in this section. 
+
+## OLS Result
+
+As discussed earlier, this is our base model where we assume that errors are normally distributed and our data do not suffer from heteroskedasticity and endogeneity. 
+
+```{r}
+
+# OLS regression (biased due to endogeneity)
+model_ols_sub <- lm(frequency_num ~ age + gender + item_fashion + amount + rating +
+                      subscribed + shipping + promo + prev_purchases +
+                      income + season,
+                    data=shopping_iv)
+summary(model_ols_sub)
+```
+
+The OLS estimation shows that the age of the individual, gender being male, products being fashion related item, amount spent per purchase, subscription, amount spent in previous year on purchase, income, and season being Spring and Winter all had a significant effect on the frequency of purchase by the individual. We obtained a good R2 value of 62.9%, which suggest that the model can moderately explain the purchase behavior of the individual. There are many micro-economic and macro-economic factors that we did not control for, therefore we expect our model to perform moderately. 
+
+We also performed some diagnostic test for our OLS model.
+
+### Model Diagnosis
+
+To verify that these assumptions are met, we will perform a test for normality, heteroskedasticity and endogeneity. 
+
+#### Linearity Assumption 
+
+```{r}
+# Lets extract residuals and fitted values from the OLS model.
+residuals_ols <- residuals(model_ols_sub)
+fitted_ols <- fitted(model_ols_sub)
+
+# Linearity Assumption
+
+# Residuals vs Fitted plot
+plot(fitted_ols, residuals_ols,
+     xlab="Fitted Values", ylab="Residuals",
+     main="Residuals vs Fitted")
+abline(h=0, col="red")
+```
+
+The residuals are fairly distributed across all individuals. There is no alarmaing pattern in the residuls as seen through the residuals vs fitted plot.
+
+
+#### Normality of residuals
+
+Lets observe if the residuals are normally distributed through qq plot.
+
+```{r}
+# QQ plot
+qqnorm(residuals_ols)
+qqline(residuals_ols, col="red")
+```
+
+The erros can be said to be normally distributed.
+
+But, lets also perform a formal test in addition to our visual test for normality. We'll use Shapiro-Wilk test for normality of errors.
+
+```{r}
+shapiro.test(residuals_ols)
+```
+
+The observed p-value is greater than 0.05, suggesting that our residuals are approximately normal.
+
+#### Heteroskedasticity test
+
+We will also perform a heteroskedasticity test for the presence of unequal variance acrross different individuals. We will perform Breusch-Pagan test for heteroskedasticity.
+
+
+```{r}
+bptest(model_ols_sub)
+```
+
+Since the p-value is greater than 0.05, the presence of homoskedasticity is not rejected. i.e we don't face the problem of heteroskedasticity.
+
+In addition to the diagnostic test, we also perform the VIF test to test for possible presence of multicollinearity.
+
+#### Multicollinearity
+
+```{r}
+vif_values <- vif(model_ols_sub)
+vif_values
+```
+As per rule, VIF > 5 indicates moderate multicollinearity, and VIF > 10 indicates severe multicollinearity.
+
+Since our variables show values around 1, multicollinearity wont be a problem for our model.
+
+Lets summarize our diagnostic results. The Shapiro-Wilk test fails to reject the normality of errors. The BP test for heteroskedasticity also fails to reject the null hypothesis of heteroskedasticity. Therefore, the classical assumption of homoskedasticity and normality of errors holds for our data.
+
+## Robust OLS SE
+
+ Since our model does not face heteroskedasticity as reported by some tests, we dont necessarily have to worry about our standard errors. But we will still go forward and estimate the robust standard errors although they are not required as our OLS model is efficient in the absence of heteroskedasticity. But, even though heteroskedasticity is not present, we suspect that endogeneity is present in our OLS model which biases our OLS estimates.
+
+```{r}
+robust_se <- coeftest(model_ols_sub, vcov = vcovHC(model_ols_sub, type = "HC1"))
+
+print(robust_se)
+```
+
+## IV-Reg Result
+
+In the first stage, we will regress the endogenous variable Suscription on all exogenous variables and the instrument variable MarketingOffer.
+
+$Suscription_i$ = $π_1$ + $π_2 Age_i$ + $π_3 Male_i$ + $π_4 Fashion_i$ + $π_5 Amount_i$ + $π_6 Rating_i$ + $π_7 MarketingOffer_i$ + $π_8 Shipping_i$ + $π_9 Promo$ + $π_{10} PreviousPurchase_i$ + $π_{11} Income_i$ + $π_{12} Spring_i$ + $π_{13} Summer_i$ + $π_{14} Winter_i$ + $μ_i$ 
+
+
+```{r}
+first_stage <- lm(subscribed ~ marketing_offer + age + gender + item_fashion + amount + rating +
+                       + shipping + promo + prev_purchases +
+                      income + season,
+                    data=shopping_iv)
+summary(first_stage)
+```
+
+In the second stage, we will use the predicted values of suscription from the first stage regression to substitute the original values of suscription which were endogenous. Basically, we just replace subscription with $\widehat{Subscription}$ in our original OLS model.
+
+$Purchase Frequency_i$ = $β_1$ + $β_2 Age_i$ + $β_3 Male_i$ + $β_4 Fashion_i$ + $β_5 Amount_i$ + $β_6 Rating_i$ + $β_7 \widehat{Subscription}_i$ + $β_8 Shipping_i$ + $β_9 Promo$ + $β_{10} PreviousPurchase_i$ + $β_{11} Income_i$ + $β_{12} Spring_i$ + $β_{13} Summer_i$ + $β_{14} Winter_i$ + $μ_i$ 
+
+
+```{r}
+# IV regression (2SLS) using marketing_offer as instrument for subscribed
+model_iv_sub <- ivreg(frequency_num ~ age + gender + item_fashion + amount + rating +
+                        subscribed + shipping + promo + prev_purchases +
+                        income + season
+                      | age + gender + item_fashion + amount + rating +
+                        shipping + promo + prev_purchases +
+                        income + season + marketing_offer,
+                      data=shopping_iv)
+
+summary(model_iv_sub, diagnostics=TRUE)
+```
+
+The Wu-Hausman test, which compares the results of our OLS model and our IV (2SLS) model to see if using OLS was appropriate in the first place, specifically testing whether endogeneity is a problem, rejects the null hypothesis of exogeneity. Therefore, our variable subscription is endogenous. We used marketing offer as an instrument variable for subscription, especially because marketing offers for subscription can explain whether the individual gets a subscription and marketing offers for subscription does not directly explain the purchase frequency of the individual. Statistically, marketing offer is a strong instrument as we reject the null hypothesis of weak instrument with a p-value of 0.000. As our model is just identified with one IV and one endogenous variable, we won’t perform the over-identification test.
+
+The robust standard errors in the case of endogeneity are not useful. Generalized Least Squares (GLS) also cannot correct for endogeneity. Therefore, IV-estimation is the best approach in this case. 
+
+Based on IV-estimation, we can make the following inference.
+
+Age: 0.043, for every one-year increase in a customer's age, their purchase frequency is estimated to increase by 0.043 units, holding all other variables constant. This effect is highly statistically significant.
+
+Amount: -0.01, for every one-unit increase in the average transaction amount, the purchase frequency is estimated to decrease by 0.011 units. This suggests that customers who spend more per transaction tend to shop slightly less often. This effect is highly statistically significant.
+
+Previous purchases: 0.320, for every one additional previous purchase a customer has made, their current purchase frequency is estimated to increase by 0.320 units, indicating strong customer loyalty or habit formation. This effect is highly statistically significant.
+
+Income: 0.0008, while the number is small due to the scale of income, this indicates that higher income is associated with a statistically significant, slight increase in purchase frequency.
+
+Gender: -0.847, male customers are estimated to have a purchase frequency that is 0.847 units lower than the reference gender category (primarily Female), holding all else constant. This is a highly significant difference.
+
+Item-Fashion: 1.030, customers engaging with 'fashion' items have a frequency that is 1.030 units higher than those in the reference category.
+
+Rating: 0.231, a one-point increase in customer rating is associated with a 0.231 unit increase in purchase frequency. This is a marginally significant effect.
+
+Subscription: -1.104, in the OLS model, this was highly significant, but the IV results suggest that once endogeneity is accounted for, being subscribed has no statistically significant effect on purchase frequency. The previous OLS result (1.821) was probably biased upward. The IV (2SLS) regression isolates only the true causal effect of subscription using our instrument (marketing offer). When we used the IV method, the true effect of being subscribed turned out to be close to zero.
+
+
+# Conclusion and Implications
+
+Our study analyzed how the demographic, product-related, and customer incentive factors influence consumer’s prurchase using OLS and 2SLS estimation methods. Our findings revealed that as predicted age, income, previous purchase history, and product category significantly define the purchase behavior of the consumers. We also found out that females tend to purchase more frequently than males. Consumers purchasing fashion and beauty related tend to purchase more frequently whereas if a consumer spends more in a single transaction, they are less likely to purchase more frequently. This may be because some consumers might have habbit of purchasing in bulk or they purchase greater quantity per transaction so they will have a lower necessity in future.  
+
+[@iyengar2022impact] and [@meyer2008influence] found that paid subscription and loyalty program can increase customer purchases but their effectiveness varies across segments, and causality depends on program design. Our IV model shows that while using marketing offer for subscription as instrument, subscription shows zero causal effect on purchase frequency. This might be because we are looking at a broad range of products and we are also controlling for previous purchase history. (Meyer-Waarden & Benavent, 2006) also found that loyalty programmes do not dramatically alter market-wide purchase patterns indicating limited or conditional effects.
+
+Our study therefore contributes to the literature by offering an integrative attempt to explain the consumer repeated purchase behavior using a wide range of factors. Our findings that past behaviour of purchase has a stroger effect on present purchases compared to subscription based effect will allow retail firms to devise their sales plan accordingly. Since women are found to be involved in purchases more often than men, it would also be more effective for firms to orient their marketing offers targeting women. Firms should also re-orient their marketing strategy based on demographics such as age, income, and seasonality as all these factors showed a strong and significant effet on purchase frequency.
+
+# Limitations of the study
+
+One of our major limitations is that frequency is basically a count data, and although a costumer purchases upto 38 times per year and we have a fairly normal data, we ignored the use of poisson regression to keep our inference simple. As we used OLS we can get prediction of negative purchase frequencies as well, which we will have to ignore and treat it as zero. And, although we corrected for the endogeneity in subscription, there may be other unobserved variables (e.g consumer preference and lifestyles) that may be correlated with both regressors and purchase frequency, causing omitted variable bias. There is also a chance that our simple linear form may not be able to capture the actual relationship which may be non-linear. And because we are pooling all the product categories, we are failing to account for the heteroginiety present within each segments. Future research should also use other IVs instead of just marketing offers for subscription.

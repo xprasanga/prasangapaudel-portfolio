@@ -1,0 +1,105 @@
+---
+title: "plots"
+format: html
+---
+
+
+```{r}
+# -------------------------------
+# Simulating Milk Demand & Supply
+# -------------------------------
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(here)
+```
+
+
+set.seed(123)
+
+# Define price range (in dollars per pound)
+price <- seq(0.10, 0.30, by = 0.005)
+
+# Earlier years (1980)
+demand_1980 <- 10 - 20 * price    # downward sloping demand
+supply_1980 <- -2 + 40 * price    # upward sloping supply
+
+# Recent years (2020s)
+demand_2020 <- 7 - 25 * price
+supply_2020 <- -3 + 50 * price
+
+# Combine into one data frame
+df <- data.frame(
+  price = rep(price, 4),
+  quantity = c(demand_1980, supply_1980, demand_2020, supply_2020),
+  curve = rep(c("Demand 1980", "Supply 1980", "Demand 2020", "Supply 2020"),
+              each = length(price))
+)
+
+# Compute equilibria analytically
+eq_1980 <- data.frame(
+  year = "1980",
+  price = (10 - (-2)) / (20 + 40),
+  quantity = 10 - 20 * ((10 - (-2)) / (20 + 40))
+)
+
+eq_2020 <- data.frame(
+  year = "2020",
+  price = (7 - (-3)) / (25 + 50),
+  quantity = 7 - 25 * ((7 - (-3)) / (25 + 50))
+)
+
+equilibria <- bind_rows(eq_1980, eq_2020)
+
+# -------------------------------
+# Plot Supply & Demand Shifts
+# -------------------------------
+ggplot1<- ggplot(df, aes(x = quantity, y = price, color = curve)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(data = equilibria, aes(x = quantity, y = price), size = 3, color = "black") +
+  geom_text(
+    data = equilibria,
+    aes(x = quantity + 0.5, y = price, label = paste("Eq.", year)),
+    size = 4,
+    hjust = 0,
+    inherit.aes = FALSE,   # <---- prevents inheriting color=curve mapping
+    color = "black"        # <---- sets static color for text
+  ) +
+  labs(
+    title = "Milk Market: Shifts in Demand and Supply (1980 vs 2020)",
+    x = "Quantity of Milk (billion pounds)",
+    y = "Price (dollars per pound)",
+    caption = ""
+  ) +
+  theme_minimal(base_size = 12)
+
+ggsave("shift in demand and supply.png", plot = ggplot1, width = 6, height = 4, units = "in", dpi = 300)
+
+```
+
+```{r}
+# Simulate changing elasticities over time
+years <- seq(1980, 2025, by = 5)
+
+elasticity_df <- data.frame(
+  year = years,
+  demand_elasticity = -0.3 - 0.01 * (years - 1980) / 5,  # demand becomes more elastic
+  supply_elasticity = 0.2 + 0.015 * (years - 1980) / 5   # supply becomes more elastic
+)
+
+plot2 <- ggplot(elasticity_df, aes(x = year)) +
+  geom_line(aes(y = demand_elasticity, color = "Demand Elasticity"), linewidth = 1.2) +
+  geom_line(aes(y = supply_elasticity, color = "Supply Elasticity"), linewidth = 1.2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(
+    title = "Milk Market Elasticities (1980–2025)",
+    y = "Elasticity",
+    x = "Year",
+    caption = ""
+  ) +
+  scale_color_manual(values = c("Demand Elasticity" = "red", "Supply Elasticity" = "blue")) +
+  theme_minimal(base_size = 12)
+
+ggsave("milk elasticity history.png", plot = plot2, width = 6, height = 4, units = "in", dpi = 300)
+
+```

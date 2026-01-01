@@ -10,15 +10,23 @@ format:
 ---
 
 
-# Summary
+# Introduction
 
-Quantitattive metrics of healthcare quality offer vital information about hospital performance and patient outcomes.The `care_state` dataset from TidyTuesday (April 8), which includes state-level hospital care quality metrics for various medical diseases, is analysed in this exercise.  The dataset will provide an understanding of healthcare performance in the US by incorporating characteristics like patient scores, admission circumstances, measurement kinds, and time periods.
+Quantitattive metrics of healthcare quality offer vital information about hospital performance and patient outcomes.The care_state dataset from TidyTuesday (April 8), which includes state-level hospital care quality metrics for various medical diseases, is analysed in this exercise. The dataset will provide an understanding of healthcare performance in the US by incorporating characteristics like patient scores, admission circumstances, measurement kinds, and time periods.
 
-# Loading the libraries
 
-```{r}
+```{r, echo=FALSE, message=FALSE}
 library(here)
 library(dplyr)
+library(tidyverse)
+library(usmap)
+library(tidyverse)
+library(ggplot2)
+library(tidymodels)  #rsample for splitting
+library(glmnet)  #Lasso implementation
+library(ranger)  #  random forest
+
+
 ```
 
 ```{r setup, include=FALSE}
@@ -31,7 +39,7 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 We will import the dataset directly from Github using readr.
 
-```{r}
+```{r, message=FALSE}
 care_state <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-08/care_state.csv')
 ```
 
@@ -41,11 +49,13 @@ Now, we will look at the uppermost observations from tha dataset.
 head(care_state)
 ```
 
-The variables are coded in the correct way. But we will modify them according to our needs if required.
+The variables are coded in the correct way. And we will modify them according to our needs if required.
 
 # Exploratory Data Analysis
 
 The dates look interesting, we might be able to use the duration from start to end as an information in our research. We will first look if there are multiple start dates and end dates or if all the dates are same.
+
+Let's observe how start dates are distributed in our dataset.
 
 ```{r}
 #counting the occurrences of each start_date
@@ -53,10 +63,12 @@ care_state %>%
   count(start_date, name = "frequency") %>%
   arrange(desc(frequency)) %>%  # sorting by most frequent
   print(n = Inf)  #showing all rows
-
 ```
 
 We can observe that there are only four start dates although some of them have very high frequency and some of them have a low frequency.
+
+
+Noe, let's observe how end dates are distributed in our dataset.
 
 ```{r}
 #counting the occurrences of each end_date
@@ -68,7 +80,7 @@ care_state %>%
 
 There are only two end dates.
 
-So there is not much information in this variables for exploration.
+So there is not much variation in this variables for exploration. Maybe other variables can much wider range of values. Lets observe how observations are distributed across states.
  
  
 ## Checking the most frequent condition in each state
@@ -76,10 +88,6 @@ So there is not much information in this variables for exploration.
 Now we will see which of the condition is most frequent in each of the state and if there is a pattern among the states.
 
 ```{r}
-library(tidyverse)
-install.packages("usmap")
-library(usmap)
-
 #finding most frequent condition per state
 top_conditions <- care_state %>%
   count(state, condition) %>%
@@ -100,11 +108,9 @@ We can see that for every state Emergency is the most frequent condition.
 
 ## Checking the frequencies of different measures.
 
-
-Now, we will observe the freqency of different values under the variable `measure_name`.
+Now, we will observe the freqency of different values under the variable measure_name. We can look into only the top measures as well but since we are just exploring let's tabulate all availabe categories under the variable measure_name and tabulate their frequencies.
 
 ```{r}
-
 #getting frequency counts for measure_name
 measure_counts <- care_state %>%
   count(measure_name, sort = TRUE)  #sorting by most frequent
@@ -118,10 +124,11 @@ We can observe that all the unique values have 56 observations, except the first
 
 ## Average time patients spent in the emergency department before being sent home
 
-Creating a dataset to plot "Average time patients spent in the emergency department before being sent home" across states.
+We also have a category "Average time....before being sent home" in our variable measure_names. We will create a dataset to plot "Average time patients spent in the emergency department before being sent home" across states.
+
+Let's create a dataset with measure_name having "Average time patients spent in the emergency department before being sent home" as only category.
 
 ```{r}
-library(tidyverse)
 
 #creating filtered dataframe
 avgtime <- care_state %>%
@@ -131,12 +138,11 @@ avgtime <- care_state %>%
 ```
 
 
-Plotting the "Average time patients spent in the emergency department before being sent home" across states.
+Now, using the newly created datset, let's plot the "Average time patients spent in the emergency department before being sent home" across states.
+
+But the values are average time for each patient, we will plot the overall average across all patients within a particular state.
 
 ```{r}
-library(tidyverse)
-library(usmap)
-
 #calculating average time by state
 state_avg_time <- avgtime %>% 
   group_by(state) %>%
@@ -169,10 +175,9 @@ We can observe that there is variation across states with central US states show
 
 ## Influenza Vaccination Rates Among Healthcare Workers across states.
 
-```{r}
-library(tidyverse)
-library(usmap)
+We will now plot influenza vaccination rates among healthcare workers across states using the information in the variable vaccination_rate. We will create a new dataset again by filtering "Healthcare workers given influenza vaccination" category from the measure_name variable.
 
+```{r}
 #filtering vaccination data
 flu_vax <- care_state %>%
   filter(str_detect(measure_name, 
@@ -198,6 +203,10 @@ plot_usmap(data = flu_vax,
 
 We an observe that there is variation across different states.
 
+## Average values for "score" across states
+
+Now, we will try to see the average values for "score" across states. Note that "score" contains different types of values including days spent at hospital, use of opoids, and different proportion such as vaccinations. It is not a good idea to just use the average across all measure_name as they contain different kind of information but as this project only focuses on the learning the procedure, we can overlook this aspect.
+
 ```{r}
 condition_corr <- care_state %>%
   group_by(condition) %>%
@@ -207,23 +216,32 @@ condition_corr <- care_state %>%
 ggplot(condition_corr, aes(x = reorder(condition, mean_score), y = mean_score)) +
   geom_col(fill = "steelblue") +
   geom_text(aes(label = round(mean_score, 1)), vjust = -0.5) +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 1)) +
   labs(title = "Average Score by Medical Condition",
-       x = "Condition",
+       x = "Conditions and Categories",
        y = "Average Score") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+   theme(
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+ axis.text.x = element_text(angle = 0, hjust = 0.5))
 
 ```
+
 We can observe that medical condition and scores are also related to each other.
 
+## Relation between enrollment duration and score
+
+
+We will first convert days to numeric so that it is easy to plot it on the axes.
 
 ```{r}
-library(ggplot2)
-
-#days to numeric
 care_state <- care_state %>% 
   mutate(days = as.numeric(end_date - start_date))
+```
 
+Now, let's create the plot of duration at hospital vs score.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #creatig the plot days vs score
 ggplot(care_state, aes(x = days, y = score)) +
   geom_point(alpha = 0.5, color = "steelblue") +
@@ -236,6 +254,18 @@ ggplot(care_state, aes(x = days, y = score)) +
 
 The duration days also show some relation with the score.
 
+# Project Objective
+
+1. Use three different estimation methods to fit the primary model.
+
+$score_i$ = $β_0$ + $β_1$ $days_i$ + $β_2$ $state_i$ + $β_3$ $condition_i$ + $β_4$ $measure_i$ <br>
+
+2. Evaluate the performance of each estimation method using evaluation metrices. <br>
+
+3. Use train/test and cross-validation method to check the robustness of the model. <br>
+
+
+Although it is not advisable to run regression without knowing the actual relationship among the factors and a specific reason, we are just using this project to learn the process and we will overlook the fact that our actual model might not make any practical sense in some context. Saying this, we will still go ahead and check these hypothesis.
 
 # Hypothesis
 
@@ -245,15 +275,18 @@ We hypothesize that the factors "measure name" "days", "state" and "condition" i
 
 #  Analysis 
 
-We observed that the start date and end dates do not vary much across the observations and are quite similar. There are four categories of start date and two categories of end date. We will create a variable "days" using the start date and the end date.
+We observed that the start date and end dates do not vary much across the observations and are quite similar. There are four categories of start date and two categories of end date. We will create a variable "days" for duration days using the start date and the end date.
+
 
 ```{r}
 care_state <- care_state %>%
   mutate(days = as.numeric(end_date - start_date))
 ```
-We have now created the dataset.
 
-Now, we will prepare the dataset for our analysis
+We have now created the dataset with variable "days".
+
+Now, we will prepare the dataset for our analysis. We will convert variables to factors and numeric based on the type of data they possess. We will also drop rows with missing values so that the sample size is same across all models and estimation methods in upcoming analysis. 
+
 ```{r}
 #preparing the modeling dataset
 data <- care_state %>%
@@ -265,12 +298,13 @@ data <- care_state %>%
   drop_na()  #removing rows with missing values
 ```
 
+## Traning and Testing
 
-Splitting the data into train/train.
+To test the robustness of our models we will divide the dataset into train/test dataset. We will use the train dataset for our entire analysis process and finnaly we will test if the models perform equally well in an unseen train dataset.
+
+Now, let's split the data into train/train.
 
 ```{r}
-library(tidymodels)  #rsample for splitting
-
 #performing the 75/25 split
 set.seed(123)  #for reproducibility
 data_split <- initial_split(data, prop = 3/4)
@@ -287,18 +321,31 @@ We will now use "days", "state", "condition", "measure_name" to predict the "sco
 
 In this setion, we will perform a linear reression analysis. Although it is not a good idea to use variables with too many categories, but in this dataset the variables are too complex to categorize into smaller groups, so will proceed as it is.
 
-```{r}
-library(tidymodels)
+The model is given as:
 
+$score_i$ = $β_0$ + $β_1$ $days_i$ + $β_2$ $state_i$ + $β_3$ $condition_i$ + $β_4$ $measure_i$
+
+```{r}
 #fitting linear regression
 lm_fit <- linear_reg() %>% 
   set_engine("lm") %>% 
   fit(score ~ days + state + condition + measure_name, 
       data = train_data)
+```
 
+Now, due to a very high number of categories within the variable measure, we will get a lot of predictor variables in our regression model. But, **seeking causality is not our objective here**. So, we will just list the most significant factors from the regression result and move on to the more important part: the performance of our model.
+
+The most significant factors are:
+
+```{r}
 #getting model summary
 tidy(lm_fit) %>% 
   arrange(p.value)  # Show most significant predictors first
+```
+
+Now, lets look into the performance of our model which is more important for us for this project.
+
+```{r, warning=FALSE}
 
 #making predictions on train data
 train_results <- train_data %>% 
@@ -307,10 +354,21 @@ train_results <- train_data %>%
 #evaluating performance
 metrics <- train_results %>% 
   metrics(truth = score, estimate = .pred)
+```
 
-#showing performance metrics
+
+The (Root Mean Squared Errors) RMSE, $R^2$ value, and (Mean Absolute Deviance) MAE for the OLS model is given below.
+
+```{r}
 print(metrics)
+```
 
+We can observe that the RMSE value is 34.9 and the R-square value is 0.876. 
+
+
+Now, let's perform a visual test for model fit using observed and predicted values.
+
+```{r}
 # Observed vs Predicted plot
 ggplot(train_results, aes(x = score, y = .pred)) +
   geom_point(alpha = 0.5) +
@@ -321,13 +379,19 @@ ggplot(train_results, aes(x = score, y = .pred)) +
   theme_minimal()
 ```
 
-We can observe that the RMSE value is 34.9 and the adjusted-R-square value is 0.876. The observed-predicted plot also shows a good fit for the datapoints.
+The observed-predicted plot also shows a good fit for the datapoints as datapoints lie close to the fitted line.
 
 ## LASSO regression
 
+Now, lets fit the same model using lasso-regression. Lasso (Least Absolute Shrinkage and Selection Operator) regression is a statistical tool, and also a type of linear regression that adds a penalty (L1 regularization) to shrink coefficients. This can force ciefficients of some less important predictors to become exactly zero, and hence performing an automatic feature selection, preventing overfitting, and simpliflying models especially with many variables.
+
+The model for lasso is also the same model used in OLS, we just add a penalty value of 0.1 on this estimation process.
+
+$score_i$ = $β_0$ + $β_1$ $days_i$ + $β_2$ $state_i$ + $β_3$ $condition_i$ + $β_4$ $measure_i$
+
+Fitting the model using LASSO.
+
 ```{r}
-library(tidymodels)
-library(glmnet)  #Lasso implementation
 
 #setting up Lasso model specification
 lasso_spec <- linear_reg(
@@ -341,10 +405,23 @@ lasso_fit <- lasso_spec %>%
   fit(score ~ days + state + condition + measure_name, 
       data = train_data)
 
+```
+
+Now, lets look into the coefficients to see if any factors were dropped by LASSO regularization.
+
+```{r}
 # coefficients (non-zero ones only)
 tidy(lasso_fit) %>% 
   filter(estimate != 0) %>% 
   arrange(desc(abs(estimate)))
+
+```
+
+Interestingly, our OLS regression has 78 predictors in the final estimated model but our LASSO regression has only 73 predictors which means some variables were dropped by our LASSO model. If we want to know which variable was dropped, we can simply ask R to print the full regression result and then we can identify which factor was considered unnecessary by LASSO regression. But, as discussed earlier, we are not here for causality.
+
+Let's look into the performance of our LASSO regression.
+
+```{r}
 
 #making predictions
 train_results <- train_data %>% 
@@ -354,10 +431,19 @@ train_results <- train_data %>%
 lasso_metrics <- train_results %>% 
   metrics(truth = score, estimate = .pred)
 
-#print result
-cat("Lasso Performance:\n")
-print(lasso_metrics)
+```
 
+The (Root Mean Squared Errors) RMSE, $R^2$ value, and (Mean Absolute Deviance) MAE for the LASSO model is given below.
+
+```{r}
+print(lasso_metrics)
+```
+
+We can observe a RMSE value of 35, which is smaller than what we observed for the OLS model. The R-squared value is 0.875 which is quite simillar to the regression model. 
+
+Now, lets also check the model fit graphically.
+
+```{r}
 #Observed vs Predicted plot
 ggplot(train_results, aes(x = score, y = .pred)) +
   geom_point(alpha = 0.5, color = "darkorange") +
@@ -369,13 +455,24 @@ ggplot(train_results, aes(x = score, y = .pred)) +
   theme_minimal()
 ```
 
-We can observe a RMSE value of 35, which is smaller than what we observed for the OLS model. The R-squared value is 0.875 which is quite simillar to the regression model. The observed-predicted plot also shows a good fit as observed for the regression model.
+The observed-predicted plot also shows a good fit as observed for the regression model.
 
 ## Random Forest
 
+The model for Random Forest is also the same model used in OLS and LASSO technique. But for Random Forest we will add:
+
+$trees=500$, which stands for default number of decision trees used when implementing the Random Forest,
+
+$mtry=3$, which sets the number of predictors that will be randomly sampled at each tree split, and 
+
+$minimal-node-size=5$, which controls the minimum number of data points required to be in a node for it to be split any further during the tree-building process.
+
+$score_i$ = $β_0$ + $β_1$ $days_i$ + $β_2$ $state_i$ + $β_3$ $condition_i$ + $β_4$ $measure_i$
+
+
+Lets fit the equation using Random Forest model.
+
 ```{r}
-library(tidymodels)
-library(ranger)  #  random forest
 
 #setting up and fit Random Forest
 rf_spec <- rand_forest(
@@ -389,6 +486,11 @@ rf_spec <- rand_forest(
 rf_fit <- rf_spec %>% 
   fit(score ~ days + state + condition + measure_name, 
       data = train_data)
+```
+
+Now, lets create a figure to see the important variables suggested by the random Forest model.
+
+```{r}
 
 #extracting variable importance 
 importance_df <- rf_fit$fit$variable.importance %>% 
@@ -402,17 +504,44 @@ ggplot(importance_df, aes(x = reorder(variable, importance), y = importance)) +
   labs(x = NULL, y = "Importance", 
        title = "Random Forest Variable Importance") +
   theme_minimal()
-
 ```
-The random forest model shows a relatively high importance for measure_name, which makes sense.
+
+The results from random forest model suggets a relatively high importance of measure_name in predicting the score for the particular observation. But, lets not focus on causal relations here. We are here to compare the model performance across different estimation techniques.
+
+Let's look into the performance metrices of our RF model
 
 ```{r}
-#making predictions and evaluate
+#making predictions and evaluate RF model
 rf_results <- train_data %>% 
   bind_cols(predict(rf_fit, new_data = train_data))
 
 rf_metrics <- rf_results %>% 
   metrics(truth = score, estimate = .pred)
+
+print(rf_metrics)
+```
+
+We can observe that the RMSE of a random forest model is 26.6 while the R-square is 0.929. If we compare the three models, the Random Forest model has the lowest RMSE and the highest R-squared value. Thus, RF performs the best.
+
+Let's also perform a visual test for the model fit.
+
+```{r}
+# Observed vs Predicted plot
+ggplot(rf_results, aes(x = score, y = .pred)) +
+  geom_point(alpha = 0.6, color = "darkgreen") +
+  geom_abline(slope = 1, linetype = "dashed", color = "red") +
+  labs(title = "Random Forest: Observed vs Predicted",
+       x = "Actual Score", y = "Predicted Score") +
+  theme_minimal()
+```
+
+We can observe that the random forest model shows a very small difference between the observed and the predicted with values clustered around the fitted line. Hence, it is a better model.
+
+
+To summarize, lets tabulate the performance metrices of all three models: OLS regression, LASSO regression, and Random Forest model, all in a single table.
+
+
+```{r}
 
 #comparing all models
 bind_rows(
@@ -425,25 +554,16 @@ bind_rows(
   pivot_wider(names_from = .metric, values_from = .estimate)
 
 ```
-We can observe that the RMSE of a random forest model is 27.06 while the R-square is 0.927. If we compare the three models, the Random Forest model has the lowest RMSE and the highest R-squared value. Thus RF performs the best.
 
-```{r}
-# Observed vs Predicted plot
-ggplot(rf_results, aes(x = score, y = .pred)) +
-  geom_point(alpha = 0.6, color = "darkgreen") +
-  geom_abline(slope = 1, linetype = "dashed", color = "red") +
-  labs(title = "Random Forest: Observed vs Predicted",
-       x = "Actual Score", y = "Predicted Score") +
-  theme_minimal()
-```
-
-We can observe that the random forest model shows a very closer difference between the observed and the predicted. Hence, it is a better model.
+It is clearly visible that Random Forest model has the lowest RMSE value and the highest R-squared value. MAE is also the smallest for the RF model. All three metrices show that Random Forest model provides the best fit for our equation.
 
 # CV approach
 
-we will now use a Cross-validation approach to test our results.
+As we know, a cross-validation approach systematically evaluates a machine learning model's performance by repeatedly splitting data into training and validation sets, training the model on the training portion, and testing its generalization on the unseen validation portion, with results averaged to provide a robust estimate of how it performs on new data, preventing overfitting by ensuring every data point serves as a test case at least once, typically using methods like k-fold and leave-one-out. In our case, we will follow the k-fold technique.
 
-```{r}
+Now, as a robustness test, lets use the Cross-validation approach to test our results. We will use 5-folds for this project.
+
+```{r, warning=FALSE, message=FALSE}
 #creating CV folds from training data (10-fold by default)
 set.seed(123)
 cv_folds <- vfold_cv(train_data, v = 5)  # 5-fold CV
@@ -500,11 +620,13 @@ rf_res <- fit_resamples(
   metrics = metric_set(rmse, rsq, mae)
 )
 
-
 ```
 
 
-Comparing Model Performance ----
+Now, we will use the performance data obtained from the 5-fold and take the average. We will do this for each estimation technique.
+
+
+Let's start with the performance of OLS model in the CV test.
 
 ```{r}
 collect_metrics(lm_res)
@@ -512,24 +634,33 @@ collect_metrics(lm_res)
 
 We can observe that the RMSE values for the Linear regressions are quite consistent and show a comparitively low standard deviation. These RMSE values are also quite similar to the ones we obtained in our whole train dataset which was 34.9
 
+
+Now, lets look into the performance of LASSO technique in the CV test.
+
 ```{r}
 collect_metrics(lasso_res)
 ```
 
 We can observe that the RMSE values for the LASSO regressions are also quite consistent and show a comparitively low standard deviation. These RMSE values are also quite similar to the ones we obtained in our whole train dataset which was 35. The R-squared values are also quite similar to our previous value.
 
+Finally, lets look into the performance of our Random Forest technique in the CV test.
+
 ```{r}
 collect_metrics(rf_res)
 ```
 
-In the case of the Random Forest model, we can observe that there is a very high increase in the RMSE value, almost the double of the previous value. This implies that the model performance of our Random forest model in the whole train dataset can not be trusted. We will now see if this pattern of inconsistency also exists in the test dataset or not.
+In the case of the Random Forest model, we can observe that there is a very high increase in the RMSE value, almost the double of the previous value. This implies that the model performance of our Random forest model in the  train dataset can not be trusted. We will now see if this pattern of inconsistency also exists in the test dataset or not.
 
 
 # Test dataset
  
-## Regression (Test dataset)
+ In this section, we will use the estimated model from our training dataset to see if the model can accurately predict when test dataset is used.
+ 
+## OLS Regression (Test dataset)
 
-```{r}
+We will start with our OLS prediction We will use the model estimated from our train dataset and calculte the performance metrices.
+
+```{r,message=FALSE, warning=FALSE}
 #making predictions on test data
 test_results <- test_data %>% 
   bind_cols(predict(lm_fit, new_data = test_data))
@@ -542,8 +673,11 @@ test_metrics <- test_results %>%
 print(test_metrics)
 
 ```
+
 We can observe that the RMSE value for the linear regression has increased by almost 50% but the R-square value is somewhat consistent with the train results.
 
+
+Let's also observe the model fit graphically for the test dataset.
 
 ```{r}
 # Observed vs Predicted plot
@@ -561,7 +695,7 @@ The predicted-observed plot shows a good fit for the datapoints.
 
 ## LASSO (TEST dataset)
 
-Now, we will perfom the LASSO regression on the test dataset.
+Now, we will perfom the LASSO prediction on the test dataset as well. As with OLS regression, we will use the estimated model from the train dataset to predict using the test dataset and calculate the performance metrices.
 
 ```{r}
 #predictions
@@ -573,13 +707,14 @@ lasso_metrics_test <- test_results %>%
   metrics(truth = score, estimate = .pred)
 
 #print performance
-cat("Lasso Performance (Test data):\n")
 print(lasso_metrics_test)
 
 ```
 
 The LASSO regression also shows an almost 50% increase in RMSE values however the RMSE values are slightly greater than the Linear regression model although the difference is very small almost dismissable.
 
+
+Let's also observe the model fit graphically for the test dataset.
 
 ```{r}
 # Observed vs Predicted plot
@@ -598,6 +733,7 @@ We can observe that the predicted-observed plot show a good fit for the datapoin
 
 ## Random Forest (Test dataset)
 
+Finally, we will perfom the Random Forest prediction on the test dataset as well. As with OLS prediction and LASSO prediction, we will use the estimated model from the train dataset to predict using the test dataset and calculate the performance metrices.
 
 ```{r}
 #  predictions 
@@ -607,19 +743,13 @@ rf_results_test <- test_data %>%
 rf_metrics_test <- rf_results_test %>% 
   metrics(truth = score, estimate = .pred)
 
-#comparing all three models
-bind_rows(
-  linear_reg = test_metrics,
-  lasso = lasso_metrics_test,
-  random_forest = rf_metrics_test,
-  .id = "model"
-) %>% 
-  select(model, .metric, .estimate) %>% 
-  pivot_wider(names_from = .metric, values_from = .estimate)
-
+print(rf_metrics_test)
 ```
 
 We can observe that the  RMSE value for the random forest is even bigger, increasing by almost 100%, the R-squared value has also decreased.
+
+
+Let's also observe the model fit graphically for the test dataset.
 
 ```{r}
 # Observed vs Predicted plot
@@ -632,6 +762,22 @@ ggplot(rf_results_test, aes(x = score, y = .pred)) +
 ```
 
 We can observe that the random model also shows agood fit for the datapoints.
+
+
+Now, to summarize, let's tabulte the performance of all three models.
+
+```{r}
+#comparing all three models
+bind_rows(
+  linear_reg = test_metrics,
+  lasso = lasso_metrics_test,
+  random_forest = rf_metrics_test,
+  .id = "model"
+) %>% 
+  select(model, .metric, .estimate) %>% 
+  pivot_wider(names_from = .metric, values_from = .estimate)
+
+```
 
 # Comparision Table
 
