@@ -2,10 +2,325 @@
 title: "Personal Website."
 ---
 
-*Hi, my name is Prasanga Paudel, and I'd like to welcome you to my website.*
+<style>
+/* Landing-page-only design */
+.landing-shell {
+  margin: -1.5rem -1rem 0;
+  padding: 2rem 1rem 4rem;
+  background: #0b0f14;
+  color: #eef2f7;
+}
 
-*I am a first year PhD student in Agriculture and Applied Economics at Texas Tech University, Lubbock and this is a website I created to publish about myself and my data analytics projects.*
+.landing-shell * { box-sizing: border-box; }
 
-## Want to know more about me?
+.hero-panel {
+  max-width: 1180px;
+  margin: 0 auto 2rem;
+  padding: 3rem;
+  border: 1px solid #263241;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #111923 0%, #172230 55%, #10151d 100%);
+  box-shadow: 0 18px 50px rgba(0,0,0,.28);
+}
 
-If you want to know more about me please feel free to navigate through this website. The `About Me` section will direct you to my personal information webpage. Clicking on `Projects` will lead you to different data analytics and data handling projects that I have been part of.
+.hero-kicker {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: .35rem .75rem;
+  border: 1px solid #3a4a5d;
+  border-radius: 999px;
+  color: #9fc5e8;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-panel h1 {
+  margin: 0 0 1rem;
+  color: #ffffff !important;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.02;
+  font-weight: 800;
+}
+
+.hero-panel p {
+  max-width: 760px;
+  margin: 0 0 1.5rem;
+  color: #b9c4d0;
+  font-size: 1.08rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.hero-button {
+  display: inline-block;
+  padding: .7rem 1rem;
+  border: 1px solid #3b4c60;
+  border-radius: 10px;
+  background: #1c2836;
+  color: #f4f7fa !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: .2s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  background: #26384b;
+  border-color: #5b7794;
+}
+
+.dashboard {
+  max-width: 1180px;
+  margin: 0 auto 2.5rem;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+
+.dashboard-header p {
+  margin: .35rem 0 0;
+  color: #8f9baa;
+}
+
+.dashboard-label {
+  color: #6f849b;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-card {
+  min-height: 190px;
+  padding: 1.25rem;
+  border: 1px solid #273342;
+  border-radius: 16px;
+  background: #121923;
+  text-decoration: none !important;
+  color: #eef2f7 !important;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  border-color: #4d647c;
+  background: #17212d;
+  box-shadow: 0 14px 30px rgba(0,0,0,.25);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 1rem;
+  border-radius: 11px;
+  background: #1d2a38;
+  color: #a9c9e7;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 .35rem;
+  color: #ffffff !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.dashboard-card p {
+  margin: 0 0 1rem;
+  color: #8f9baa;
+  font-size: .9rem;
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.card-link {
+  padding: .28rem .55rem;
+  border: 1px solid #334356;
+  border-radius: 7px;
+  color: #a9c9e7;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.card-grid.projects {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.project-card {
+  min-height: 150px;
+}
+
+.project-card .card-icon {
+  margin-bottom: .8rem;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.quick-card {
+  padding: 1rem 1.15rem;
+  border: 1px solid #273342;
+  border-radius: 13px;
+  background: #0f151d;
+}
+
+.quick-card strong {
+  color: #ffffff;
+}
+
+.quick-card span {
+  display: block;
+  margin-top: .3rem;
+  color: #7f8b99;
+  font-size: .85rem;
+}
+
+@media (max-width: 1000px) {
+  .card-grid, .card-grid.projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 650px) {
+  .landing-shell { margin-left: -.5rem; margin-right: -.5rem; }
+  .hero-panel { padding: 2rem 1.25rem; }
+  .card-grid, .card-grid.projects, .quick-grid { grid-template-columns: 1fr; }
+  .dashboard-header { display: block; }
+}
+</style>
+
+<div class="landing-shell">
+
+  <div class="hero-panel">
+    <div class="hero-kicker">Data · Economics · Programming</div>
+    <h1>Prasanga Paudel</h1>
+    <p>
+      Welcome to my data analysis portfolio. I am a PhD student in Agriculture and Applied Economics at Texas Tech University, building projects across economics, data analytics, visualization, and programming.
+    </p>
+    <div class="hero-actions">
+      <a class="hero-button" href="aboutme.html">About Me →</a>
+      <a class="hero-button" href="https://github.com/xprasanga/prasangapaudel-portfolio">View GitHub →</a>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <div class="dashboard-label">01 · Programming</div>
+        <h2>Explore by Language</h2>
+        <p>My programming work, organized by language. More projects will be added here as the portfolio grows.</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <a class="dashboard-card" href="#python">
+        <div class="card-icon">Py</div>
+        <h3>Python</h3>
+        <p>Visualization, analysis, automation, and future data science projects.</p>
+        <div class="card-links"><span class="card-link">A · Placeholder</span><span class="card-link">B · Placeholder</span></div>
+      </a>
+
+      <a class="dashboard-card" href="#r">
+        <div class="card-icon">R</div>
+        <h3>R</h3>
+        <p>My existing statistical analysis and Quarto-based portfolio work.</p>
+        <div class="card-links"><span class="card-link">A · Existing Work</span><span class="card-link">B · Placeholder</span></div>
+      </a>
+
+      <a class="dashboard-card" href="#cpp">
+        <div class="card-icon">C++</div>
+        <h3>C++</h3>
+        <p>Programming projects and exercises to be added as I learn C++.</p>
+        <div class="card-links"><span class="card-link">A · Placeholder</span><span class="card-link">B · Placeholder</span></div>
+      </a>
+
+      <a class="dashboard-card" href="#java">
+        <div class="card-icon">J</div>
+        <h3>Java</h3>
+        <p>Future programming projects and applications.</p>
+        <div class="card-links"><span class="card-link">A · Placeholder</span><span class="card-link">B · Placeholder</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <div class="dashboard-label">02 · Projects</div>
+        <h2>Explore by Area</h2>
+        <p>A second way to navigate the portfolio: by the type of work rather than the programming language.</p>
+      </div>
+    </div>
+
+    <div class="card-grid projects">
+      <a class="dashboard-card project-card" href="#finance">
+        <div class="card-icon">$</div>
+        <h3>Finance</h3>
+        <p>Financial analysis, markets, and quantitative projects.</p>
+      </a>
+      <a class="dashboard-card project-card" href="#economics">
+        <div class="card-icon">E</div>
+        <h3>Economics</h3>
+        <p>Econometrics, economic theory, policy, and applied research.</p>
+      </a>
+      <a class="dashboard-card project-card" href="#data-science">
+        <div class="card-icon">DS</div>
+        <h3>Data Science</h3>
+        <p>Machine learning, data handling, modeling, and analysis.</p>
+      </a>
+      <a class="dashboard-card project-card" href="#visualization">
+        <div class="card-icon">V</div>
+        <h3>Visualization</h3>
+        <p>Interactive graphics, dashboards, and visual storytelling.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <div class="dashboard-label">03 · Portfolio Map</div>
+        <h2>What's Inside</h2>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <div class="quick-card"><strong>About Me</strong><span>Background, CV, and professional information.</span></div>
+      <div class="quick-card"><strong>Projects</strong><span>Completed and upcoming analytics projects.</span></div>
+      <div class="quick-card"><strong>Learning</strong><span>A growing record of programming and technical work.</span></div>
+    </div>
+  </div>
+
+</div>
