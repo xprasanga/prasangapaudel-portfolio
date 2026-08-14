@@ -241,7 +241,7 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr) <span class="co">#for nice visualization of data </span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co">#to set paths</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/freebird/Documents/GitHub/prasangapaudel-MADA-portfolio</code></pre>
+<pre><code>here() starts at /Users/freebird/Downloads/VS Code/prasangapaudel-portfolio</code></pre>
 </div>
 </div>
 </section>
@@ -282,14 +282,14 @@ $ Gender &lt;chr&gt; "M", "O", "F", "F", "NA", "F", "O", "M", "N", "M", "F", "F"
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    Height              Weight          Gender         
- Length:14          Min.   :  45.0   Length:14         
- Class :character   1st Qu.:  55.0   Class :character  
- Mode  :character   Median :  70.0   Mode  :character  
-                    Mean   : 602.7                     
-                    3rd Qu.:  90.0                     
-                    Max.   :7000.0                     
-                    NA's   :1                          </code></pre>
+<pre><code>       Height       Weight             Gender  
+ Length   :14   Min.   :  45.0   Length   :14  
+ N.unique :13   1st Qu.:  55.0   N.unique : 5  
+ N.blank  : 0   Median :  70.0   N.blank  : 0  
+ Min.nchar: 1   Mean   : 602.7   Min.nchar: 1  
+ Max.nchar: 5   3rd Qu.:  90.0   Max.nchar: 2  
+                Max.   :7000.0                 
+                NAs    :1                      </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

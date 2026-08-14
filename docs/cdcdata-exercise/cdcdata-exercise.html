@@ -260,34 +260,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for missing values within the cdc_dataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cdc_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> LocationAbbr       LocationDesc            Year       Datasource       
- Length:2550        Length:2550        Min.   :1970   Length:2550       
- Class :character   Class :character   1st Qu.:1982   Class :character  
- Mode  :character   Mode  :character   Median :1994   Mode  :character  
-                                       Mean   :1994                     
-                                       3rd Qu.:2007                     
-                                       Max.   :2019                     
-  TopicDesc         MeasureDesc          Data_Value        Data_Value_Unit   
- Length:2550        Length:2550        Min.   :2.737e+06   Length:2550       
- Class :character   Class :character   1st Qu.:2.812e+07   Class :character  
- Mode  :character   Mode  :character   Median :7.708e+07   Mode  :character  
-                                       Mean   :1.701e+08                     
-                                       3rd Qu.:2.004e+08                     
-                                       Max.   :1.888e+09                     
- Data_Value_Type    GeoLocation           Source          TopicTypeId       
- Length:2550        Length:2550        Length:2550        Length:2550       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            
-   TopicId           MeasureId        
- Length:2550        Length:2550       
- Class :character   Class :character  
- Mode  :character   Mode  :character  
-                                      
-                                      
-                                      </code></pre>
+<pre><code>    LocationAbbr     LocationDesc       Year          Datasource  
+ Length   :2550   Length   :2550   Min.   :1970   Length   :2550  
+ N.unique :  51   N.unique :  51   1st Qu.:1982   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   Median :1994   N.blank  :   0  
+ Min.nchar:   2   Min.nchar:   4   Mean   :1994   Min.nchar:   2  
+ Max.nchar:   2   Max.nchar:  20   3rd Qu.:2007   Max.nchar:   2  
+                                   Max.   :2019                   
+     TopicDesc       MeasureDesc     Data_Value         Data_Value_Unit
+ Length   :2550   Length   :2550   Min.   :2.737e+06   Length   :2550  
+ N.unique :   1   N.unique :   1   1st Qu.:2.812e+07   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   Median :7.708e+07   N.blank  :   0  
+ Min.nchar:  25   Min.nchar:  15   Mean   :1.701e+08   Min.nchar:   1  
+ Max.nchar:  25   Max.nchar:  15   3rd Qu.:2.004e+08   Max.nchar:   1  
+                                   Max.   :1.888e+09                   
+  Data_Value_Type    GeoLocation         Source        TopicTypeId  
+ Length   :2550   Length   :2550   Length   :2550   Length   :2550  
+ N.unique :   1   N.unique :  51   N.unique :   1   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   N.blank  :   0   N.blank  :   0  
+ Min.nchar:   7   Min.nchar:  32   Min.nchar:  55   Min.nchar:   3  
+ Max.nchar:   7   Max.nchar:  38   Max.nchar:  55   Max.nchar:   3  
+                                                                    
+      TopicId         MeasureId   
+ Length   :2550   Length   :2550  
+ N.unique :   1   N.unique :   1  
+ N.blank  :   0   N.blank  :   0  
+ Min.nchar:   6   Min.nchar:   6  
+ Max.nchar:   6   Max.nchar:   6  
+                                  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cdc_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -617,20 +617,20 @@ F-statistic: 132.4 on 1 and 48 DF,  p-value: 2.117e-15</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> LocationDesc       LocationAbbr            Year        Data_Value      
- Length:155         Length:155         Min.   :1970   Min.   : 5142000  
- Class :character   Class :character   1st Qu.:1977   1st Qu.:24687170  
- Mode  :character   Mode  :character   Median :1985   Median :45327675  
-                                       Mean   :1985   Mean   :47026928  
-                                       3rd Qu.:1993   3rd Qu.:72472412  
-                                       Max.   :2000   Max.   :92494239  
- GeoLocation       
- Length:155        
- Class :character  
- Mode  :character  
-                   
-                   
-                   </code></pre>
+<pre><code>    LocationDesc    LocationAbbr      Year        Data_Value      
+ Length   :155   Length   :155   Min.   :1970   Min.   : 5142000  
+ N.unique :  5   N.unique :  5   1st Qu.:1977   1st Qu.:24687170  
+ N.blank  :  0   N.blank  :  0   Median :1985   Median :45327675  
+ Min.nchar:  5   Min.nchar:  2   Mean   :1985   Mean   :47026928  
+ Max.nchar:  8   Max.nchar:  2   3rd Qu.:1993   3rd Qu.:72472412  
+                                 Max.   :2000   Max.   :92494239  
+    GeoLocation 
+ Length   :155  
+ N.unique :  5  
+ N.blank  :  0  
+ Min.nchar: 32  
+ Max.nchar: 37  
+                </code></pre>
 </div>
 </div>
 <p>This section contributed by Mohammed Zuber</p>
@@ -717,34 +717,34 @@ F-statistic: 132.4 on 1 and 48 DF,  p-value: 2.117e-15</code></pre>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for missing values and summary statistics</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(synthetic_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> LocationAbbr       LocationDesc            Year       Datasource       
- Length:2550        Length:2550        Min.   :1970   Length:2550       
- Class :character   Class :character   1st Qu.:1982   Class :character  
- Mode  :character   Mode  :character   Median :1994   Mode  :character  
-                                       Mean   :1994                     
-                                       3rd Qu.:2007                     
-                                       Max.   :2019                     
-  TopicDesc         MeasureDesc          Data_Value        Data_Value_Unit   
- Length:2550        Length:2550        Min.   :2.811e+06   Length:2550       
- Class :character   Class :character   1st Qu.:4.743e+08   Class :character  
- Mode  :character   Mode  :character   Median :9.411e+08   Mode  :character  
-                                       Mean   :9.422e+08                     
-                                       3rd Qu.:1.411e+09                     
-                                       Max.   :1.887e+09                     
- Data_Value_Type    GeoLocation           Source          TopicTypeId       
- Length:2550        Length:2550        Length:2550        Length:2550       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            
-   TopicId           MeasureId        
- Length:2550        Length:2550       
- Class :character   Class :character  
- Mode  :character   Mode  :character  
-                                      
-                                      
-                                      </code></pre>
+<pre><code>    LocationAbbr     LocationDesc       Year          Datasource  
+ Length   :2550   Length   :2550   Min.   :1970   Length   :2550  
+ N.unique :  51   N.unique :  51   1st Qu.:1982   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   Median :1994   N.blank  :   0  
+ Min.nchar:   2   Min.nchar:   4   Mean   :1994   Min.nchar:   2  
+ Max.nchar:   2   Max.nchar:  20   3rd Qu.:2007   Max.nchar:   2  
+                                   Max.   :2019                   
+     TopicDesc       MeasureDesc     Data_Value         Data_Value_Unit
+ Length   :2550   Length   :2550   Min.   :2.811e+06   Length   :2550  
+ N.unique :   1   N.unique :   1   1st Qu.:4.743e+08   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   Median :9.411e+08   N.blank  :   0  
+ Min.nchar:  25   Min.nchar:  15   Mean   :9.422e+08   Min.nchar:   1  
+ Max.nchar:  25   Max.nchar:  15   3rd Qu.:1.411e+09   Max.nchar:   1  
+                                   Max.   :1.887e+09                   
+  Data_Value_Type    GeoLocation         Source        TopicTypeId  
+ Length   :2550   Length   :2550   Length   :2550   Length   :2550  
+ N.unique :   1   N.unique :  51   N.unique :   1   N.unique :   1  
+ N.blank  :   0   N.blank  :   0   N.blank  :   0   N.blank  :   0  
+ Min.nchar:   7   Min.nchar:  32   Min.nchar:  55   Min.nchar:   3  
+ Max.nchar:   7   Max.nchar:  38   Max.nchar:  55   Max.nchar:   3  
+                                                                    
+      TopicId         MeasureId   
+ Length   :2550   Length   :2550  
+ N.unique :   1   N.unique :   1  
+ N.blank  :   0   N.blank  :   0  
+ Min.nchar:   6   Min.nchar:   6  
+ Max.nchar:   6   Max.nchar:   6  
+                                  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the structure of the synthetic dataset</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(synthetic_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1034,20 +1034,20 @@ F-statistic: 0.3773 on 1 and 48 DF,  p-value: 0.5419</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> LocationDesc       LocationAbbr            Year        Data_Value       
- Length:155         Length:155         Min.   :1970   Min.   :1.483e+07  
- Class :character   Class :character   1st Qu.:1977   1st Qu.:5.343e+08  
- Mode  :character   Mode  :character   Median :1985   Median :9.591e+08  
-                                       Mean   :1985   Mean   :9.775e+08  
-                                       3rd Qu.:1993   3rd Qu.:1.388e+09  
-                                       Max.   :2000   Max.   :1.853e+09  
- GeoLocation       
- Length:155        
- Class :character  
- Mode  :character  
-                   
-                   
-                   </code></pre>
+<pre><code>    LocationDesc    LocationAbbr      Year        Data_Value       
+ Length   :155   Length   :155   Min.   :1970   Min.   :1.483e+07  
+ N.unique :  5   N.unique :  5   1st Qu.:1977   1st Qu.:5.343e+08  
+ N.blank  :  0   N.blank  :  0   Median :1985   Median :9.591e+08  
+ Min.nchar:  5   Min.nchar:  2   Mean   :1985   Mean   :9.775e+08  
+ Max.nchar:  8   Max.nchar:  2   3rd Qu.:1993   3rd Qu.:1.388e+09  
+                                 Max.   :2000   Max.   :1.853e+09  
+    GeoLocation 
+ Length   :155  
+ N.unique :  5  
+ N.blank  :  0  
+ Min.nchar: 32  
+ Max.nchar: 37  
+                </code></pre>
 </div>
 </div>
 <p>From the outputs, my synthetic dataset maintains the correct structure with selected variables such as LocationDesc, Year, and Data_Value, ensuring consistency. However, the regression analysis for Georgia and Alabama shows very low R-squared values (0.0016 and 0.0078, respectively) and high p-values (0.7798 and 0.5419), indicating no significant relationship between Year and Data_Value. Additionally, while the mean and median values for each state appear reasonable, the wide range and high standard deviation suggest excessive randomness in Data_Value generation.</p>

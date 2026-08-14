@@ -989,11 +989,7 @@ window.Quarto = {
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> score, <span class="at">estimate =</span> .pred)</span>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co">#print performance</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso Performance (Test data):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Lasso Performance (Test data):</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lasso_metrics_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lasso_metrics_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   .metric .estimator .estimate
@@ -1006,15 +1002,15 @@ window.Quarto = {
 <p>The LASSO regression also shows an almost 50% increase in RMSE values however the RMSE values are slightly greater than the Linear regression model although the difference is very small almost dismissable.</p>
 <p>Let’s also observe the model fit graphically for the test dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed vs Predicted plot</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(test_results, <span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Lasso Regression Performance on test data"</span>,</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Penalty ="</span>, lasso_fit<span class="sc">$</span>spec<span class="sc">$</span>args<span class="sc">$</span>penalty),</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Observed Scores"</span>, </span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Scores"</span>) <span class="sc">+</span></span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed vs Predicted plot</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(test_results, <span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Lasso Regression Performance on test data"</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Penalty ="</span>, lasso_fit<span class="sc">$</span>spec<span class="sc">$</span>args<span class="sc">$</span>penalty),</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Observed Scores"</span>, </span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Scores"</span>) <span class="sc">+</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1029,14 +1025,14 @@ window.Quarto = {
 <h2 data-number="8.3" class="anchored" data-anchor-id="random-forest-test-dataset"><span class="header-section-number">8.3</span> Random Forest (Test dataset)</h2>
 <p>Finally, we will perfom the Random Forest prediction on the test dataset as well. As with OLS prediction and LASSO prediction, we will use the estimated model from the train dataset to predict using the test dataset and calculate the performance metrices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  predictions </span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>rf_results_test <span class="ot">&lt;-</span> test_data <span class="sc">%&gt;%</span> </span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(rf_fit, <span class="at">new_data =</span> test_data))</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>rf_metrics_test <span class="ot">&lt;-</span> rf_results_test <span class="sc">%&gt;%</span> </span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> score, <span class="at">estimate =</span> .pred)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rf_metrics_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  predictions </span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>rf_results_test <span class="ot">&lt;-</span> test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(rf_fit, <span class="at">new_data =</span> test_data))</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>rf_metrics_test <span class="ot">&lt;-</span> rf_results_test <span class="sc">%&gt;%</span> </span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> score, <span class="at">estimate =</span> .pred)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rf_metrics_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   .metric .estimator .estimate
@@ -1049,13 +1045,13 @@ window.Quarto = {
 <p>We can observe that the RMSE value for the random forest is even bigger, increasing by almost 100%, the R-squared value has also decreased.</p>
 <p>Let’s also observe the model fit graphically for the test dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed vs Predicted plot</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rf_results_test, <span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Random Forest: Observed vs Predicted"</span>,</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Actual Score"</span>, <span class="at">y =</span> <span class="st">"Predicted Score"</span>) <span class="sc">+</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed vs Predicted plot</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rf_results_test, <span class="fu">aes</span>(<span class="at">x =</span> score, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Random Forest: Observed vs Predicted"</span>,</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Actual Score"</span>, <span class="at">y =</span> <span class="st">"Predicted Score"</span>) <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1067,15 +1063,15 @@ window.Quarto = {
 <p>We can observe that the random model also shows agood fit for the datapoints.</p>
 <p>Now, to summarize, let’s tabulte the performance of all three models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#comparing all three models</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">linear_reg =</span> test_metrics,</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lasso =</span> lasso_metrics_test,</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">random_forest =</span> rf_metrics_test,</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, .metric, .estimate) <span class="sc">%&gt;%</span> </span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#comparing all three models</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">linear_reg =</span> test_metrics,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lasso =</span> lasso_metrics_test,</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">random_forest =</span> rf_metrics_test,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, .metric, .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   model          rmse   rsq   mae
@@ -1090,53 +1086,53 @@ window.Quarto = {
 <section id="comparision-table" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Comparision Table</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating comprehensive comparison table with fixed CV metrics</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>performance_summary <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#training results</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> metrics,</span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> lasso_metrics,</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> rf_metrics,</span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"Training"</span>),</span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># CV results</span></span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
-<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
-<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
-<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
-<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
-<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
-<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
-<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
-<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(model, mean, .metric) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">.estimate =</span> mean) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"CV"</span>),</span>
-<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Test results</span></span>
-<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb60-30"><a href="#cb60-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> test_metrics,</span>
-<span id="cb60-31"><a href="#cb60-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> lasso_metrics_test,</span>
-<span id="cb60-32"><a href="#cb60-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> rf_metrics_test,</span>
-<span id="cb60-33"><a href="#cb60-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb60-34"><a href="#cb60-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"Test"</span>)</span>
-<span id="cb60-35"><a href="#cb60-35" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-36"><a href="#cb60-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, data, .metric, .estimate) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-37"><a href="#cb60-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-38"><a href="#cb60-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, data)</span>
-<span id="cb60-39"><a href="#cb60-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-40"><a href="#cb60-40" aria-hidden="true" tabindex="-1"></a><span class="co">#printing the formatted table</span></span>
-<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a>performance_summary <span class="sc">%&gt;%</span> </span>
-<span id="cb60-42"><a href="#cb60-42" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb60-43"><a href="#cb60-43" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(rmse, rsq, mae), <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-44"><a href="#cb60-44" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
-<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Model Performance Summary"</span>,</span>
-<span id="cb60-46"><a href="#cb60-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Comparison across training, cross-validation and test sets"</span></span>
-<span id="cb60-47"><a href="#cb60-47" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating comprehensive comparison table with fixed CV metrics</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>performance_summary <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#training results</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> metrics,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> lasso_metrics,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> rf_metrics,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"Training"</span>),</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># CV results</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> <span class="fu">show_best</span>(lm_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> <span class="fu">show_best</span>(lasso_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"rmse"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rmse"</span>),</span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"rsq"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"rsq"</span>),</span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> <span class="fu">show_best</span>(rf_res, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">.metric =</span> <span class="st">"mae"</span>),</span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(model, mean, .metric) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">.estimate =</span> mean) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"CV"</span>),</span>
+<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Test results</span></span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear_reg =</span> test_metrics,</span>
+<span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">lasso =</span> lasso_metrics_test,</span>
+<span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">random_forest =</span> rf_metrics_test,</span>
+<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"Test"</span>)</span>
+<span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-36"><a href="#cb58-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, data, .metric, .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-37"><a href="#cb58-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, data)</span>
+<span id="cb58-39"><a href="#cb58-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-40"><a href="#cb58-40" aria-hidden="true" tabindex="-1"></a><span class="co">#printing the formatted table</span></span>
+<span id="cb58-41"><a href="#cb58-41" aria-hidden="true" tabindex="-1"></a>performance_summary <span class="sc">%&gt;%</span> </span>
+<span id="cb58-42"><a href="#cb58-42" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb58-43"><a href="#cb58-43" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(rmse, rsq, mae), <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-44"><a href="#cb58-44" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
+<span id="cb58-45"><a href="#cb58-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Model Performance Summary"</span>,</span>
+<span id="cb58-46"><a href="#cb58-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Comparison across training, cross-validation and test sets"</span></span>
+<span id="cb58-47"><a href="#cb58-47" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="ceuyptzccv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#ceuyptzccv table {

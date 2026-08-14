@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Antigua and Barbuda:   57   Mean   :1988   Mean   : 55.31   Mean   :64.81  
  Argentina          :   57   3rd Qu.:2002   3rd Qu.: 85.10   3rd Qu.:73.00  
  Armenia            :   57   Max.   :2016   Max.   :276.90   Max.   :83.90  
- (Other)            :10203                  NA's   :1453                    
+ (Other)            :10203                  NAs    :1453                    
    fertility       population             gdp               continent   
  Min.   :0.840   Min.   :3.124e+04   Min.   :4.040e+07   Africa  :2907  
  1st Qu.:2.200   1st Qu.:1.333e+06   1st Qu.:1.846e+09   Americas:2052  
@@ -249,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :4.084   Mean   :2.701e+07   Mean   :1.480e+11   Europe  :2223  
  3rd Qu.:6.000   3rd Qu.:1.523e+07   3rd Qu.:5.540e+10   Oceania : 684  
  Max.   :9.220   Max.   :1.376e+09   Max.   :1.174e+13                  
- NA's   :187     NA's   :185         NA's   :2972                       
+ NAs    :187     NAs    :185         NAs    :2972                       
              region    
  Western Asia   :1026  
  Eastern Africa : 912  
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Botswana    :  57   Mean   :1988   Mean   : 95.12   Mean   :54.38  
  Burkina Faso:  57   3rd Qu.:2002   3rd Qu.:124.70   3rd Qu.:60.10  
  Burundi     :  57   Max.   :2016   Max.   :237.40   Max.   :77.60  
- (Other)     :2565                  NA's   :226                     
+ (Other)     :2565                  NAs    :226                     
    fertility       population             gdp               continent   
  Min.   :1.500   Min.   :    41538   Min.   :4.659e+07   Africa  :2907  
  1st Qu.:5.160   1st Qu.:  1605232   1st Qu.:8.373e+08   Americas:   0  
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :5.851   Mean   : 12235961   Mean   :9.346e+09   Europe  :   0  
  3rd Qu.:6.860   3rd Qu.: 13888152   3rd Qu.:6.552e+09   Oceania :   0  
  Max.   :8.450   Max.   :182201962   Max.   :1.935e+11                  
- NA's   :51      NA's   :51          NA's   :637                        
+ NAs    :51      NAs    :51          NAs    :637                        
                        region   
  Eastern Africa           :912  
  Western Africa           :912  
@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   : 95.12   Mean   :54.38  
  3rd Qu.:124.70   3rd Qu.:60.10  
  Max.   :237.40   Max.   :77.60  
- NA's   :226                     </code></pre>
+ NAs    :226                     </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>two <span class="ot">&lt;-</span> africadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(population, life_expectancy) <span class="co"># creating another dataset with only two variables as listed</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(two)  <span class="co"># obtaining the information about the structure of two</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -351,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   : 12235961   Mean   :54.38  
  3rd Qu.: 13888152   3rd Qu.:60.10  
  Max.   :182201962   Max.   :77.60  
- NA's   :51                         </code></pre>
+ NAs    :51                         </code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -623,10 +623,9 @@ F-statistic: 0.517 on 1 and 49 DF,  p-value: 0.4755</code></pre>
 <p>We are going to assign the data set a name. Lets say heights_data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"naniar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-The downloaded binary packages are in
-    /var/folders/yx/x_hgd5y52px8zm3krl7r6hb40000gn/T//Rtmp9zrqUd/downloaded_packages</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into '/opt/homebrew/lib/R/4.6/site-library'
+(as 'lib' is unspecified)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar) <span class="co"># this package will help us know where there are any missing values in the data</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
