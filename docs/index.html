@@ -165,14 +165,324 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em>Hi, my name is Prasanga Paudel, and I’d like to welcome you to my website.</em></p>
-<p><em>I am a first year PhD student in Agriculture and Applied Economics at Texas Tech University, Lubbock and this is a website I created to publish about myself and my data analytics projects.</em></p>
-<section id="want-to-know-more-about-me" class="level2">
-<h2 class="anchored" data-anchor-id="want-to-know-more-about-me">Want to know more about me?</h2>
-<p>If you want to know more about me please feel free to navigate through this website. The <code>About Me</code> section will direct you to my personal information webpage. Clicking on <code>Projects</code> will lead you to different data analytics and data handling projects that I have been part of.</p>
+<style>
+/* Landing-page-only design */
+.landing-shell {
+  margin: -1.5rem -1rem 0;
+  padding: 2rem 1rem 4rem;
+  background: #0b0f14;
+  color: #eef2f7;
+}
+
+.landing-shell * { box-sizing: border-box; }
+
+.hero-panel {
+  max-width: 1180px;
+  margin: 0 auto 2rem;
+  padding: 3rem;
+  border: 1px solid #263241;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #111923 0%, #172230 55%, #10151d 100%);
+  box-shadow: 0 18px 50px rgba(0,0,0,.28);
+}
+
+.hero-kicker {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: .35rem .75rem;
+  border: 1px solid #3a4a5d;
+  border-radius: 999px;
+  color: #9fc5e8;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-panel h1 {
+  margin: 0 0 1rem;
+  color: #ffffff !important;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.02;
+  font-weight: 800;
+}
+
+.hero-panel p {
+  max-width: 760px;
+  margin: 0 0 1.5rem;
+  color: #b9c4d0;
+  font-size: 1.08rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.hero-button {
+  display: inline-block;
+  padding: .7rem 1rem;
+  border: 1px solid #3b4c60;
+  border-radius: 10px;
+  background: #1c2836;
+  color: #f4f7fa !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: .2s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  background: #26384b;
+  border-color: #5b7794;
+}
+
+.dashboard {
+  max-width: 1180px;
+  margin: 0 auto 2.5rem;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+
+.dashboard-header p {
+  margin: .35rem 0 0;
+  color: #8f9baa;
+}
+
+.dashboard-label {
+  color: #6f849b;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-card {
+  min-height: 190px;
+  padding: 1.25rem;
+  border: 1px solid #273342;
+  border-radius: 16px;
+  background: #121923;
+  text-decoration: none !important;
+  color: #eef2f7 !important;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  border-color: #4d647c;
+  background: #17212d;
+  box-shadow: 0 14px 30px rgba(0,0,0,.25);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 1rem;
+  border-radius: 11px;
+  background: #1d2a38;
+  color: #a9c9e7;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 .35rem;
+  color: #ffffff !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.dashboard-card p {
+  margin: 0 0 1rem;
+  color: #8f9baa;
+  font-size: .9rem;
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.card-link {
+  padding: .28rem .55rem;
+  border: 1px solid #334356;
+  border-radius: 7px;
+  color: #a9c9e7;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.card-grid.projects {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.project-card {
+  min-height: 150px;
+}
+
+.project-card .card-icon {
+  margin-bottom: .8rem;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.quick-card {
+  padding: 1rem 1.15rem;
+  border: 1px solid #273342;
+  border-radius: 13px;
+  background: #0f151d;
+}
+
+.quick-card strong {
+  color: #ffffff;
+}
+
+.quick-card span {
+  display: block;
+  margin-top: .3rem;
+  color: #7f8b99;
+  font-size: .85rem;
+}
+
+@media (max-width: 1000px) {
+  .card-grid, .card-grid.projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 650px) {
+  .landing-shell { margin-left: -.5rem; margin-right: -.5rem; }
+  .hero-panel { padding: 2rem 1.25rem; }
+  .card-grid, .card-grid.projects, .quick-grid { grid-template-columns: 1fr; }
+  .dashboard-header { display: block; }
+}
+</style>
+<div class="landing-shell">
+<div class="hero-panel">
+<pre><code>&lt;div class="hero-kicker"&gt;Data · Economics · Programming&lt;/div&gt;
+&lt;h1&gt;Prasanga Paudel&lt;/h1&gt;
+&lt;p&gt;
+  Welcome to my data analysis portfolio. I am a PhD student in Agriculture and Applied Economics at Texas Tech University, building projects across economics, data analytics, visualization, and programming.
+&lt;/p&gt;
+&lt;div class="hero-actions"&gt;
+  &lt;a class="hero-button" href="aboutme.html"&gt;About Me →&lt;/a&gt;
+  &lt;a class="hero-button" href="https://github.com/xprasanga/prasangapaudel-portfolio"&gt;View GitHub →&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div class="dashboard">
+<pre><code>&lt;div class="dashboard-header"&gt;
+  &lt;div&gt;
+    &lt;div class="dashboard-label"&gt;01 · Programming&lt;/div&gt;
+    &lt;h2&gt;Explore by Language&lt;/h2&gt;
+    &lt;p&gt;My programming work, organized by language. More projects will be added here as the portfolio grows.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="card-grid"&gt;
+  &lt;a class="dashboard-card" href="#python"&gt;
+    &lt;div class="card-icon"&gt;Py&lt;/div&gt;
+    &lt;h3&gt;Python&lt;/h3&gt;
+    &lt;p&gt;Visualization, analysis, automation, and future data science projects.&lt;/p&gt;
+    &lt;div class="card-links"&gt;&lt;span class="card-link"&gt;A · Placeholder&lt;/span&gt;&lt;span class="card-link"&gt;B · Placeholder&lt;/span&gt;&lt;/div&gt;
+  &lt;/a&gt;
+
+  &lt;a class="dashboard-card" href="#r"&gt;
+    &lt;div class="card-icon"&gt;R&lt;/div&gt;
+    &lt;h3&gt;R&lt;/h3&gt;
+    &lt;p&gt;My existing statistical analysis and Quarto-based portfolio work.&lt;/p&gt;
+    &lt;div class="card-links"&gt;&lt;span class="card-link"&gt;A · Existing Work&lt;/span&gt;&lt;span class="card-link"&gt;B · Placeholder&lt;/span&gt;&lt;/div&gt;
+  &lt;/a&gt;
+
+  &lt;a class="dashboard-card" href="#cpp"&gt;
+    &lt;div class="card-icon"&gt;C++&lt;/div&gt;
+    &lt;h3&gt;C++&lt;/h3&gt;
+    &lt;p&gt;Programming projects and exercises to be added as I learn C++.&lt;/p&gt;
+    &lt;div class="card-links"&gt;&lt;span class="card-link"&gt;A · Placeholder&lt;/span&gt;&lt;span class="card-link"&gt;B · Placeholder&lt;/span&gt;&lt;/div&gt;
+  &lt;/a&gt;
+
+  &lt;a class="dashboard-card" href="#java"&gt;
+    &lt;div class="card-icon"&gt;J&lt;/div&gt;
+    &lt;h3&gt;Java&lt;/h3&gt;
+    &lt;p&gt;Future programming projects and applications.&lt;/p&gt;
+    &lt;div class="card-links"&gt;&lt;span class="card-link"&gt;A · Placeholder&lt;/span&gt;&lt;span class="card-link"&gt;B · Placeholder&lt;/span&gt;&lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div class="dashboard">
+<pre><code>&lt;div class="dashboard-header"&gt;
+  &lt;div&gt;
+    &lt;div class="dashboard-label"&gt;02 · Projects&lt;/div&gt;
+    &lt;h2&gt;Explore by Area&lt;/h2&gt;
+    &lt;p&gt;A second way to navigate the portfolio: by the type of work rather than the programming language.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="card-grid projects"&gt;
+  &lt;a class="dashboard-card project-card" href="#finance"&gt;
+    &lt;div class="card-icon"&gt;$&lt;/div&gt;
+    &lt;h3&gt;Finance&lt;/h3&gt;
+    &lt;p&gt;Financial analysis, markets, and quantitative projects.&lt;/p&gt;
+  &lt;/a&gt;
+  &lt;a class="dashboard-card project-card" href="#economics"&gt;
+    &lt;div class="card-icon"&gt;E&lt;/div&gt;
+    &lt;h3&gt;Economics&lt;/h3&gt;
+    &lt;p&gt;Econometrics, economic theory, policy, and applied research.&lt;/p&gt;
+  &lt;/a&gt;
+  &lt;a class="dashboard-card project-card" href="#data-science"&gt;
+    &lt;div class="card-icon"&gt;DS&lt;/div&gt;
+    &lt;h3&gt;Data Science&lt;/h3&gt;
+    &lt;p&gt;Machine learning, data handling, modeling, and analysis.&lt;/p&gt;
+  &lt;/a&gt;
+  &lt;a class="dashboard-card project-card" href="#visualization"&gt;
+    &lt;div class="card-icon"&gt;V&lt;/div&gt;
+    &lt;h3&gt;Visualization&lt;/h3&gt;
+    &lt;p&gt;Interactive graphics, dashboards, and visual storytelling.&lt;/p&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div class="dashboard">
+<pre><code>&lt;div class="dashboard-header"&gt;
+  &lt;div&gt;
+    &lt;div class="dashboard-label"&gt;03 · Portfolio Map&lt;/div&gt;
+    &lt;h2&gt;What's Inside&lt;/h2&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="quick-grid"&gt;
+  &lt;div class="quick-card"&gt;&lt;strong&gt;About Me&lt;/strong&gt;&lt;span&gt;Background, CV, and professional information.&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="quick-card"&gt;&lt;strong&gt;Projects&lt;/strong&gt;&lt;span&gt;Completed and upcoming analytics projects.&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="quick-card"&gt;&lt;strong&gt;Learning&lt;/strong&gt;&lt;span&gt;A growing record of programming and technical work.&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
