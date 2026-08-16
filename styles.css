@@ -8,16 +8,27 @@ a:hover {
   color: #6cc0e5;
 }
 
-
 /* === Base layout === */
 body {
   font-family: 'Inter', 'Open Sans', sans-serif;
   background-color: #f9fafc;
   color: #333;
   line-height: 1.6;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 2rem;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Quarto content should use the full browser width. Individual pages can add their own max-width when needed. */
+#quarto-content,
+main.content,
+.page-columns,
+.page-columns > main {
+  width: 100%;
+  max-width: none !important;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* === Section card style === */
@@ -27,7 +38,7 @@ body {
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   margin-bottom: 2rem;
-  border-left: 6px solid #2c3e50; /* accent stripe */
+  border-left: 6px solid #2c3e50;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -100,7 +111,6 @@ footer {
   margin-top: 3rem;
 }
 
-
 .intro-container {
   animation: fadeIn 1s ease-in-out;
 }
@@ -110,35 +120,26 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
-/* === Fix heading numbering color === */
 h1 > span.header-section-number,
 h2 > span.header-section-number,
 h3 > span.header-section-number,
 h4 > span.header-section-number {
-  color: #2c3e50 !important; /* dark blue/black instead of grey */
+  color: #2c3e50 !important;
   font-weight: 600;
 }
 
-
-
-
-
-/* Make the background pure white and ensure border encloses full scrollable area */
 div.sourceCode, pre.sourceCode, pre, code {
-  background-color: #2c3e50 !important;   /* white background */
-  color: #ffffff !important;              /* black text */
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
 }
 
-
-/* === Fix References background and text color === */
 .references {
-  background-color: #ffffff !important;  /* make background white */
-  color: #000000 !important;             /* make text black */
+  background-color: #ffffff !important;
+  color: #000000 !important;
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  border-left: 6px solid #2c3e50; /* same accent as your other boxes */
+  border-left: 6px solid #2c3e50;
 }
 
 .references h2 {
@@ -147,7 +148,6 @@ div.sourceCode, pre.sourceCode, pre, code {
   margin-top: 0;
 }
 
-/* Fix links inside references */
 .references a {
   color: #2980b9;
   text-decoration: none;
@@ -157,22 +157,19 @@ div.sourceCode, pre.sourceCode, pre, code {
   text-decoration: underline;
 }
 
-
-/* === References section styling === */
 #refs,
 .references,
 .csl-bib-body,
 .csl-entry {
-  background-color: #ffffff !important;  /* white background */
-  color: #000000 !important;             /* black text */
+  background-color: #ffffff !important;
+  color: #000000 !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   border: none !important;
-  border-left: 6px solid #2c3e50;       /* optional accent stripe */
+  border-left: 6px solid #2c3e50;
   padding: 1.5rem;
   border-radius: 10px;
 }
 
-/* Heading */
 .references h2,
 #references,
 h2#references {
@@ -184,29 +181,23 @@ h2#references {
   box-shadow: none;
 }
 
-/* Links inside References */
 .references a,
 #refs a,
 .csl-entry a,
 .csl-bib-body a {
-  color: #2980b9 !important;           /* link color */
+  color: #2980b9 !important;
   text-decoration: none;
-  background: transparent !important;   /* remove hover background */
+  background: transparent !important;
 }
 
-/* Remove hover background for links */
 .references a:hover,
 #refs a:hover,
 .csl-entry a:hover,
 .csl-bib-body a:hover {
-  background: transparent !important;   /* no black box */
-  color: #6cc0e5 !important;           /* optional hover color */
+  background: transparent !important;
+  color: #6cc0e5 !important;
 }
 
-
-/* === Fix black background bar above References section === */
-
-/* Quarto sometimes wraps references in a .quarto-appendix or .callout */
 #refs,
 .references,
 div#refs,
@@ -221,7 +212,6 @@ div.section#references {
   border: none !important;
 }
 
-/* Remove the dark top band (theme panel background) */
 #refs::before,
 .references::before,
 div#refs::before,
@@ -232,13 +222,11 @@ div.quarto-appendix::before {
   background: none !important;
 }
 
-/* Reset heading color */
 #references h2,
 .references h2,
 h2#references {
-  background:  #ffffff !important;
+  background: #ffffff !important;
   color: #2c3e50 !important;
   border: none;
   box-shadow: none;
 }
-
