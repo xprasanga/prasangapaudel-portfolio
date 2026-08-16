@@ -2,122 +2,55 @@
 title: "Prasanga Paudel | Data Analysis Portfolio"
 ---
 
-<style>
-.quarto-title-block { display: none; }
-
-.portfolio-page { margin: -2rem -1rem -3rem; min-height: 100vh; background: #e8edf1; color: #182027; }
-.portfolio-page * { box-sizing: border-box; }
-
-.split-layout { display: grid; grid-template-columns: minmax(0, 58%) minmax(360px, 42%); min-height: calc(100vh - 60px); }
-
-/* LEFT: EXPLORE */
-.explore-panel { min-width: 0; padding: 4.5rem clamp(1.75rem, 4vw, 5rem) 5rem; background: #f4f6f7; }
-.about-intro { max-width: 850px; margin-bottom: 4.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid #d1d9de; }
-.about-intro h2 { margin: 0 0 1.25rem; color: #1b252c !important; font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1; letter-spacing: -.045em; font-weight: 900; }
-.about-intro p { margin: 0 0 1rem; color: #5f6c76; font-size: .98rem; line-height: 1.75; }
-
-.section-label { color: #7a8791; font-size: .68rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-.section-title { margin: .5rem 0 0; color: #1b252c !important; font-size: clamp(2rem, 3.5vw, 3.2rem); line-height: 1; letter-spacing: -.045em; font-weight: 900; }
-.section-description { max-width: 720px; margin: 1rem 0 0; color: #68757f; line-height: 1.6; }
-.explore-header { margin-bottom: 2.5rem; }
-
-/* LANGUAGE CARDS */
-.language-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.language-card { min-height: 245px; padding: 1.5rem; background: #e5eaed; border: 1px solid #d0d8de; color: #1b252c !important; text-decoration: none !important; display: flex; flex-direction: column; justify-content: space-between; transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
-.language-card:hover { background: #0d6efd; border-color: #0d6efd; color: #fff !important; transform: translateY(-4px); }
-.language-card:hover .card-number, .language-card:hover .language-name, .language-card:hover .language-description, .language-card:hover .card-arrow { color: #fff !important; }
-.card-number { color: #7a8791; font-size: .68rem; font-weight: 800; letter-spacing: .12em; }
-.language-name { margin-top: 2.5rem; color: #182027 !important; font-size: 2rem; font-weight: 900; letter-spacing: -.035em; }
-.language-description { margin: .5rem 0 0; max-width: 300px; color: #697680; font-size: .82rem; line-height: 1.5; }
-.card-arrow { align-self: flex-end; color: #34424c; font-size: 1.3rem; }
-
-/* PROJECT CARDS */
-.projects-header { margin-top: 5rem; margin-bottom: 2rem; }
-.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.project-card { min-height: 300px; overflow: hidden; position: relative; background: #202a31; color: #fff !important; text-decoration: none !important; border: 1px solid #cbd4da; }
-.project-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .72; transition: transform .35s ease, opacity .35s ease; }
-.project-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,18,23,.08) 20%, rgba(12,18,23,.88) 100%); }
-.project-card:hover .project-image { transform: scale(1.06); opacity: .82; }
-.project-content { position: absolute; z-index: 2; left: 1.4rem; right: 1.4rem; bottom: 1.4rem; }
-.project-tag { font-size: .63rem; font-weight: 800; letter-spacing: .15em; opacity: .75; }
-.project-card h3 { margin: .55rem 0 .35rem; color: #fff !important; font-size: 1.45rem; line-height: 1.05; }
-.project-card p { margin: 0; max-width: 430px; color: rgba(255,255,255,.78); font-size: .8rem; line-height: 1.45; }
-.project-arrow { position: absolute; z-index: 3; top: 1.2rem; right: 1.2rem; font-size: 1.25rem; }
-.explore-footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #d1d9de; color: #77848d; font-size: .78rem; }
-
-/* RIGHT: PROFILE */
-.intro-panel { position: sticky; top: 0; height: 100vh; min-height: 760px; padding: 4.5rem clamp(2rem, 4vw, 4.5rem); background: #dce3e8; border-left: 1px solid #c3ccd3; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto; }
-.intro-kicker { color: #66737e; font-size: .7rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-.intro-panel h1 { margin: 1.5rem 0 0; color: #172027 !important; font-size: clamp(4rem, 6vw, 7rem); line-height: .82; letter-spacing: -.065em; font-weight: 900; }
-.intro-role { margin-top: 2rem; max-width: 520px; color: #53616c; font-size: 1.02rem; line-height: 1.55; }
-.intro-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid #b9c4cc; border-left: 1px solid #b9c4cc; }
-.intro-fact { min-height: 105px; padding: 1rem; border-right: 1px solid #b9c4cc; border-bottom: 1px solid #b9c4cc; }
-.intro-fact-label { color: #73808a; font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.intro-fact-value { margin-top: .5rem; color: #26323a; font-size: .82rem; line-height: 1.4; font-weight: 650; }
-.intro-links { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
-.intro-link { padding: .7rem 1rem; border: 1px solid #aebac3; color: #26323a !important; text-decoration: none !important; font-size: .76rem; font-weight: 800; transition: .2s ease; }
-.intro-link:hover { background: #0d6efd; color: #fff !important; border-color: #0d6efd; }
-
-/* RESPONSIVE */
-@media (max-width: 1000px) {
-  .split-layout { grid-template-columns: 1fr; }
-  .intro-panel { position: relative; height: auto; min-height: auto; overflow: visible; border-left: 0; border-top: 1px solid #c3ccd3; padding: 4rem 2rem; }
-  .explore-panel { padding-top: 4rem; }
-}
-@media (max-width: 650px) {
-  .explore-panel, .intro-panel { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .language-grid, .project-grid, .intro-facts { grid-template-columns: 1fr; }
-  .about-intro { margin-bottom: 3.5rem; }
-}
-</style>
-
 ```{=html}
+<link rel="stylesheet" href="landing.css">
 <div class="portfolio-page">
   <div class="split-layout">
-
     <main class="explore-panel">
-      <section class="about-intro">
-        <div class="section-label">About the portfolio</div>
-        <h2>A little about me</h2>
-        <p>I am Prasanga Paudel, a PhD student in Agriculture and Applied Economics at Texas Tech University, with a growing interest in the intersection of economics, data, technology, and real-world decision making. My academic work has given me a strong foundation in economic theory, econometrics, statistics, and applied research, while my projects have pushed me to think more broadly about how data can be organized, analyzed, visualized, and communicated. This portfolio is a place where those interests come together. It is not intended to be only a collection of finished assignments or polished figures; it is also a record of how I am learning, experimenting, and developing as a quantitative researcher and programmer.</p>
-        <p>Much of my current work is rooted in applied economics. I am particularly interested in questions where economic behavior, public policy, environmental issues, energy, agriculture, and individual decision making overlap. My research experience has involved designing surveys, working with experimental information treatments, estimating willingness to pay, conducting econometric analysis, and interpreting results for policy-oriented audiences. I enjoy the process of taking a broad question, turning it into something that can be measured, building an empirical strategy around it, and then using data to understand what the results actually tell us. That process has also made me increasingly interested in the tools behind the analysis, rather than treating software as something that simply produces a final table or figure.</p>
-        <p>R and Quarto have been an important part of that development. I have used R for statistical and econometric analysis, data manipulation, visualization, and reproducible research, and I built this portfolio using Quarto. Working with Quarto has helped me see how analysis, writing, code, and presentation can be connected into one workflow. I have also started using Python, particularly for visualization and data-related projects, and I am now expanding my programming skills beyond the tools I have traditionally used for statistical analysis. My goal is to become comfortable moving between languages depending on the problem: using R when it is the right environment for statistical work, Python for data science and broader programming applications, and eventually C++ and Java for deeper programming and computational skills.</p>
-        <p>This website reflects that transition. Some sections represent work I have already completed, while others are deliberately placeholders for projects I will build in the future. I want the portfolio to show progression rather than pretending that every skill is already mastered. The programming section will eventually contain separate areas for Python, R, C++, and Java, with projects, exercises, visualizations, and applications organized within each language. The project section approaches the same body of work from another direction, allowing visitors to explore by subject area such as economics, finance, data science, and visualization. Over time, I would like each area to become its own small dashboard containing the projects, methods, code, results, and lessons associated with that topic.</p>
-        <p>I also care about presentation. Good quantitative work should be understandable to someone who did not write the code that produced it. For that reason, visualization and communication are important parts of the way I approach projects. A model, dataset, or statistical result becomes much more useful when its purpose and implications are clear. I am interested in building dashboards and visual explanations that make quantitative information easier to explore without removing the underlying complexity. This is one reason I am continuing to develop both my programming and web-design skills alongside my academic training.</p>
-        <p>Ultimately, this portfolio is a work in progress. My academic background is in agriculture and applied economics, but I see data and programming as increasingly important tools for working across disciplines. I want to keep building projects that combine economic reasoning with careful empirical analysis, useful visualizations, and reproducible code. As I learn new languages and techniques, this site will grow with me. The goal is not simply to demonstrate that I can use a particular software package; it is to show how I approach problems, how I learn new tools, and how I turn data into something that can support research, communication, and better decisions.</p>
-      </section>
+      <div class="explore-inner">
+        <section class="about-intro">
+          <div class="section-label">About the portfolio</div>
+          <h2>A little about me</h2>
+          <p>I am Prasanga Paudel, a PhD student in Agriculture and Applied Economics at Texas Tech University, with a growing interest in the intersection of economics, data, technology, and real-world decision making. My academic work has given me a strong foundation in economic theory, econometrics, statistics, and applied research, while my projects have pushed me to think more broadly about how data can be organized, analyzed, visualized, and communicated. This portfolio is a place where those interests come together.</p>
+          <p>My work is rooted in applied economics, particularly questions involving economic behavior, public policy, environmental issues, energy, agriculture, and individual decision making. I have worked with survey experiments, willingness-to-pay estimation, econometric analysis, and policy-oriented research. I enjoy taking a broad question, turning it into something measurable, developing an empirical strategy, and using data to understand what the results actually tell us.</p>
+          <p>R and Quarto have been important parts of that development. I have used R for statistical and econometric analysis, data manipulation, visualization, and reproducible research, and I built this portfolio using Quarto. I have also started using Python for visualization and data-related projects. My next goal is to become comfortable moving between languages depending on the problem: R for statistical work, Python for data science and broader programming, and eventually C++ and Java for deeper computational and programming skills.</p>
+          <p>This website reflects that transition. Some sections contain work I have already completed, while others are placeholders for projects I will build in the future. I want the portfolio to show progression rather than pretend that every skill is already mastered. The programming section will eventually contain separate areas for Python, R, C++, and Java, while the project section will organize work by areas such as economics, finance, data science, and visualization.</p>
+          <p>I also care about presentation. Good quantitative work should be understandable to someone who did not write the code that produced it. Visualization and communication are therefore important parts of the way I approach projects. I want to build dashboards and visual explanations that make quantitative information easier to explore without hiding the underlying complexity.</p>
+          <p>Ultimately, this portfolio is a work in progress. My academic background is in agriculture and applied economics, but I see data and programming as increasingly important tools for working across disciplines. I want to keep building projects that combine economic reasoning, careful empirical analysis, useful visualization, and reproducible code. As I learn new languages and techniques, this site will grow with me.</p>
+        </section>
 
-      <section class="explore-header" id="programming">
-        <div class="section-label">01 · Programming</div>
-        <h2 class="section-title">Explore by Language</h2>
-        <p class="section-description">A growing collection of work organized by the languages I use and learn. The cards are ready to become individual programming dashboards.</p>
-      </section>
+        <section class="explore-header" id="programming">
+          <div class="section-label">01 · Programming</div>
+          <h2 class="section-title">Explore by Language</h2>
+          <p class="section-description">A growing collection of work organized by the languages I use and learn.</p>
+        </section>
 
-      <div class="language-grid">
-        <a class="language-card" href="#python"><div class="card-number">01</div><div><div class="language-name">Python</div><p class="language-description">Visualization, analysis, automation, and future data science projects.</p></div><div class="card-arrow">→</div></a>
-        <a class="language-card" href="#r"><div class="card-number">02</div><div><div class="language-name">R</div><p class="language-description">Statistical analysis, econometrics, visualization, and Quarto projects.</p></div><div class="card-arrow">→</div></a>
-        <a class="language-card" href="#cpp"><div class="card-number">03</div><div><div class="language-name">C++</div><p class="language-description">Programming fundamentals, algorithms, and future computational projects.</p></div><div class="card-arrow">→</div></a>
-        <a class="language-card" href="#java"><div class="card-number">04</div><div><div class="language-name">Java</div><p class="language-description">Object-oriented programming, applications, and future projects.</p></div><div class="card-arrow">→</div></a>
+        <div class="language-grid">
+          <a class="language-card" href="#python"><div class="card-number">01</div><div><div class="language-name">Python</div><p class="language-description">Visualization, analysis, automation, and future data science projects.</p></div><div class="card-arrow">→</div></a>
+          <a class="language-card" href="#r"><div class="card-number">02</div><div><div class="language-name">R</div><p class="language-description">Statistical analysis, econometrics, visualization, and Quarto projects.</p></div><div class="card-arrow">→</div></a>
+          <a class="language-card" href="#cpp"><div class="card-number">03</div><div><div class="language-name">C++</div><p class="language-description">Programming fundamentals, algorithms, and future computational projects.</p></div><div class="card-arrow">→</div></a>
+          <a class="language-card" href="#java"><div class="card-number">04</div><div><div class="language-name">Java</div><p class="language-description">Object-oriented programming, applications, and future projects.</p></div><div class="card-arrow">→</div></a>
+        </div>
+
+        <section class="projects-header" id="projects">
+          <div class="section-label">02 · Portfolio Areas</div>
+          <h2 class="section-title">Explore by Area</h2>
+          <p class="section-description">Browse the portfolio by subject rather than programming language. The images are temporary placeholders.</p>
+        </section>
+
+        <div class="project-grid">
+          <a class="project-card" href="#economics"><img class="project-image" src="https://picsum.photos/seed/economics/900/650" alt="Placeholder economics image"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">ECONOMICS</div><h3>Economics &amp; Econometrics</h3><p>Applied economics, econometric analysis, policy research, economic theory, and quantitative methods.</p></div></a>
+          <a class="project-card" href="#finance"><img class="project-image" src="https://picsum.photos/seed/finance/900/650" alt="Placeholder finance image"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">FINANCE</div><h3>Finance</h3><p>Financial data, markets, quantitative analysis, and finance-related projects.</p></div></a>
+          <a class="project-card" href="#data-science"><img class="project-image" src="https://picsum.photos/seed/datascience/900/650" alt="Placeholder data science image"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">DATA SCIENCE</div><h3>Data Science</h3><p>Data preparation, statistical modeling, machine learning, and computational analysis.</p></div></a>
+          <a class="project-card" href="#visualization"><img class="project-image" src="https://picsum.photos/seed/visualization/900/650" alt="Placeholder visualization image"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">VISUALIZATION</div><h3>Data Visualization</h3><p>Charts, dashboards, interactive graphics, and visual communication of quantitative results.</p></div></a>
+        </div>
+
+        <div class="explore-footer">More sections will be added as the portfolio grows — research, projects, code, and experiments.</div>
       </div>
-
-      <div class="projects-header" id="projects">
-        <div class="section-label">02 · Portfolio Areas</div>
-        <h2 class="section-title">Explore by Area</h2>
-        <p class="section-description">Browse the portfolio by subject rather than programming language. These images are temporary placeholders and can be replaced later.</p>
-      </div>
-
-      <div class="project-grid">
-        <a class="project-card" href="#economics"><img class="project-image" src="https://picsum.photos/seed/economics/900/650" alt="Placeholder image for economics projects"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">ECONOMICS</div><h3>Economics &amp; Econometrics</h3><p>Applied economics, econometric analysis, policy research, economic theory, and quantitative methods.</p></div></a>
-        <a class="project-card" href="#finance"><img class="project-image" src="https://picsum.photos/seed/finance/900/650" alt="Placeholder image for finance projects"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">FINANCE</div><h3>Finance</h3><p>Financial data, markets, quantitative analysis, and finance-related projects.</p></div></a>
-        <a class="project-card" href="#data-science"><img class="project-image" src="https://picsum.photos/seed/datascience/900/650" alt="Placeholder image for data science projects"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">DATA SCIENCE</div><h3>Data Science</h3><p>Data preparation, statistical modeling, machine learning, and computational analysis.</p></div></a>
-        <a class="project-card" href="#visualization"><img class="project-image" src="https://picsum.photos/seed/visualization/900/650" alt="Placeholder image for visualization projects"><span class="project-arrow">↗</span><div class="project-content"><div class="project-tag">VISUALIZATION</div><h3>Data Visualization</h3><p>Charts, dashboards, interactive graphics, and visual communication of quantitative results.</p></div></a>
-      </div>
-
-      <div class="explore-footer">More sections will be added as the portfolio grows — research, projects, code, and experiments.</div>
     </main>
 
     <aside class="intro-panel">
-      <div>
+      <div class="intro-content">
         <div class="intro-kicker">Data · Economics · Programming</div>
         <h1>PRASANGA<br>PAUDEL</h1>
         <p class="intro-role">Agriculture &amp; Applied Economics · Data Analysis · Econometrics · Visualization · Programming</p>
@@ -125,7 +58,7 @@ title: "Prasanga Paudel | Data Analysis Portfolio"
           <div class="intro-fact"><div class="intro-fact-label">Academic</div><div class="intro-fact-value">PhD in Agriculture &amp; Applied Economics</div></div>
           <div class="intro-fact"><div class="intro-fact-label">Current Focus</div><div class="intro-fact-value">Economics, data analysis &amp; quantitative research</div></div>
           <div class="intro-fact"><div class="intro-fact-label">Tools</div><div class="intro-fact-value">R · Quarto · Python · Git · VS Code</div></div>
-          <div class="intro-fact"><div class="intro-fact-label">Building Next</div><div class="intro-fact-value">Python · C++ · Java · broader programming skills</div></div>
+          <div class="intro-fact"><div class="intro-fact-label">Building Next</div><div class="intro-fact-value">Python · C++ · Java</div></div>
           <div class="intro-fact"><div class="intro-fact-label">Research</div><div class="intro-fact-value">Energy, environment, policy &amp; applied economics</div></div>
           <div class="intro-fact"><div class="intro-fact-label">Portfolio</div><div class="intro-fact-value">Research · Projects · Visualization · Code</div></div>
         </div>
@@ -136,7 +69,6 @@ title: "Prasanga Paudel | Data Analysis Portfolio"
         <a class="intro-link" href="https://github.com/xprasanga/prasangapaudel-portfolio">GITHUB ↗</a>
       </div>
     </aside>
-
   </div>
 </div>
 ```
