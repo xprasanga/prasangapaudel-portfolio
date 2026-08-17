@@ -1,0 +1,395 @@
+/* =========================================================
+   PORTFOLIO LANDING PAGE
+   Full-viewport, desktop-first responsive layout
+   ========================================================= */
+
+.quarto-title-block { display: none !important; }
+
+/* Escape Quarto's normal article column so the landing page
+   occupies the actual browser viewport. */
+.portfolio-page {
+  width: 100vw;
+  max-width: none;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: -1.5rem;
+  margin-bottom: -3rem;
+  overflow-x: clip;
+  background: #eef2f4;
+  color: #182027;
+}
+
+.portfolio-page *,
+.portfolio-page *::before,
+.portfolio-page *::after { box-sizing: border-box; }
+
+.portfolio-page a { text-decoration: none !important; }
+
+/* ---------------- Desktop shell ---------------- */
+.split-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 60%) minmax(420px, 40%);
+  width: 100%;
+  min-height: calc(100vh - 56px);
+  align-items: stretch;
+}
+
+.explore-panel {
+  min-width: 0;
+  padding: clamp(3rem, 5vw, 6rem) clamp(2rem, 5vw, 7rem) 6rem;
+  background: #f4f6f7;
+}
+
+.explore-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---------------- About ---------------- */
+.about-intro {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto clamp(4rem, 7vw, 7rem);
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+  border-bottom: 1px solid #cfd8de;
+}
+
+.section-label {
+  margin-bottom: .75rem;
+  color: #71808a;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.about-intro h2,
+.section-title {
+  margin: 0;
+  color: #182127 !important;
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: .98;
+}
+
+.about-intro h2 { font-size: clamp(2.4rem, 4vw, 4.5rem); }
+.section-title { font-size: clamp(2.3rem, 4vw, 4.2rem); }
+
+.about-intro p {
+  max-width: 880px;
+  margin: 1.35rem 0 0;
+  color: #586670;
+  font-size: clamp(.96rem, 1.05vw, 1.08rem);
+  line-height: 1.8;
+}
+
+.explore-header {
+  max-width: 1000px;
+  margin: 0 auto 2.5rem;
+}
+
+.section-description {
+  max-width: 760px;
+  margin: 1rem 0 0;
+  color: #697780;
+  font-size: .98rem;
+  line-height: 1.65;
+}
+
+/* ---------------- Programming cards ---------------- */
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.language-card {
+  min-width: 0;
+  min-height: clamp(220px, 22vw, 290px);
+  padding: clamp(1.4rem, 2vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #e3e9ed;
+  border: 1px solid #cbd5dc;
+  color: #182127 !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.language-card:hover {
+  background: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff !important;
+  transform: translateY(-5px);
+  box-shadow: 0 14px 32px rgba(13,110,253,.18);
+}
+
+.card-number {
+  color: #788690;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.language-card:hover .card-number,
+.language-card:hover .language-name,
+.language-card:hover .language-description,
+.language-card:hover .card-arrow { color: #fff !important; }
+
+.language-name {
+  margin-top: 2.5rem;
+  color: #182127 !important;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+
+.language-description {
+  max-width: 360px;
+  margin: .5rem 0 0;
+  color: #687680;
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+.card-arrow {
+  align-self: flex-end;
+  color: #33424c;
+  font-size: 1.35rem;
+}
+
+/* ---------------- Project cards ---------------- */
+.projects-header {
+  max-width: 1000px;
+  margin: clamp(5rem, 8vw, 8rem) auto 2.5rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.project-card {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(280px, 25vw, 390px);
+  overflow: hidden;
+  background: #263139;
+  border: 1px solid #cbd4da;
+  color: #fff !important;
+}
+
+.project-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .72;
+  transition: transform .45s ease, opacity .35s ease;
+}
+
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,16,20,.03) 15%, rgba(10,16,20,.9) 100%);
+}
+
+.project-card:hover .project-image { transform: scale(1.06); opacity: .86; }
+
+.project-content {
+  position: absolute;
+  z-index: 2;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
+}
+
+.project-tag {
+  font-size: .63rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  opacity: .78;
+}
+
+.project-card h3 {
+  margin: .55rem 0 .4rem;
+  color: #fff !important;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  line-height: 1.05;
+}
+
+.project-card p {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(255,255,255,.82);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.project-arrow {
+  position: absolute;
+  z-index: 3;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+.explore-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #cfd8de;
+  color: #74818a;
+  font-size: .78rem;
+}
+
+/* ---------------- Right profile ---------------- */
+.intro-panel {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  padding: clamp(3rem, 5vw, 6rem) clamp(2rem, 4vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  background: #d8e0e5;
+  border-left: 1px solid #c0cbd2;
+}
+
+.intro-content {
+  width: 100%;
+  max-width: 590px;
+  margin: 0 auto;
+}
+
+.intro-kicker {
+  color: #64727c;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.intro-panel h1 {
+  margin: clamp(1.25rem, 2vw, 2rem) 0 0;
+  color: #172027 !important;
+  font-size: clamp(3.5rem, 6vw, 7.5rem);
+  line-height: .82;
+  letter-spacing: -.07em;
+  font-weight: 900;
+}
+
+.intro-role {
+  max-width: 520px;
+  margin: 2rem 0 0;
+  color: #53616c;
+  font-size: clamp(.95rem, 1.15vw, 1.08rem);
+  line-height: 1.6;
+}
+
+.intro-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  border-top: 1px solid #b6c2ca;
+  border-left: 1px solid #b6c2ca;
+}
+
+.intro-fact {
+  min-width: 0;
+  min-height: 110px;
+  padding: 1rem;
+  border-right: 1px solid #b6c2ca;
+  border-bottom: 1px solid #b6c2ca;
+}
+
+.intro-fact-label {
+  color: #72808a;
+  font-size: .63rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.intro-fact-value {
+  margin-top: .5rem;
+  color: #26323a;
+  font-size: .82rem;
+  line-height: 1.45;
+  font-weight: 650;
+}
+
+.intro-links {
+  width: 100%;
+  max-width: 590px;
+  margin: 2rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+}
+
+.intro-link {
+  padding: .72rem 1rem;
+  border: 1px solid #aebac3;
+  color: #26323a !important;
+  font-size: .74rem;
+  font-weight: 800;
+  transition: .2s ease;
+}
+
+.intro-link:hover {
+  background: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff !important;
+}
+
+/* ---------------- Desktop refinements ---------------- */
+@media (min-width: 1600px) {
+  .split-layout { grid-template-columns: minmax(0, 62%) minmax(520px, 38%); }
+  .explore-panel { padding-left: clamp(5rem, 6vw, 9rem); padding-right: clamp(5rem, 6vw, 9rem); }
+  .intro-panel { padding-left: clamp(3rem, 4vw, 6rem); padding-right: clamp(3rem, 4vw, 6rem); }
+}
+
+/* ---------------- Tablet ---------------- */
+@media (max-width: 1100px) {
+  .split-layout { grid-template-columns: minmax(0, 57%) minmax(390px, 43%); }
+  .explore-panel { padding-left: 2.5rem; padding-right: 2.5rem; }
+  .intro-panel { padding-left: 2rem; padding-right: 2rem; }
+  .intro-panel h1 { font-size: clamp(3.3rem, 6vw, 5rem); }
+}
+
+/* ---------------- Mobile ---------------- */
+@media (max-width: 900px) {
+  .portfolio-page { margin-top: -1rem; }
+  .split-layout { grid-template-columns: 1fr; }
+  .explore-panel { padding: 3.5rem 1.25rem 4rem; }
+  .intro-panel {
+    position: relative;
+    height: auto;
+    min-height: 720px;
+    overflow: visible;
+    border-left: 0;
+    border-top: 1px solid #c0cbd2;
+    padding: 4rem 1.25rem;
+  }
+  .intro-panel h1 { font-size: clamp(3.8rem, 16vw, 6rem); }
+}
+
+@media (max-width: 620px) {
+  .language-grid,
+  .project-grid,
+  .intro-facts { grid-template-columns: 1fr; }
+  .about-intro p { font-size: .95rem; line-height: 1.7; }
+  .language-card { min-height: 210px; }
+  .project-card { min-height: 300px; }
+}

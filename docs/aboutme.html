@@ -4727,9 +4727,20 @@ font-family: 'Inter', 'Open Sans', sans-serif;
 background-color: #f9fafc;
 color: #333;
 line-height: 1.6;
-margin: 0 auto;
-max-width: 1200px;
-padding: 2rem;
+margin: 0;
+max-width: none;
+padding: 0;
+overflow-x: hidden;
+}
+
+#quarto-content,
+main.content,
+.page-columns,
+.page-columns > main {
+width: 100%;
+max-width: none !important;
+margin-left: 0;
+margin-right: 0;
 }
 
 .section-box {
@@ -4738,7 +4749,7 @@ padding: 1.5rem 2rem;
 border-radius: 14px;
 box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 margin-bottom: 2rem;
-border-left: 6px solid #2c3e50; 
+border-left: 6px solid #2c3e50;
 transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .section-box:hover {
@@ -4808,34 +4819,30 @@ animation: fadeIn 1s ease-in-out;
 from { opacity: 0; transform: translateY(15px); }
 to { opacity: 1; transform: translateY(0); }
 }
-
 h1 > span.header-section-number,
 h2 > span.header-section-number,
 h3 > span.header-section-number,
 h4 > span.header-section-number {
-color: #2c3e50 !important; 
+color: #2c3e50 !important;
 font-weight: 600;
 }
-
 div.sourceCode, pre.sourceCode, pre, code {
-background-color: #2c3e50 !important; 
-color: #ffffff !important; 
+background-color: #2c3e50 !important;
+color: #ffffff !important;
 }
-
 .references {
-background-color: #ffffff !important; 
-color: #000000 !important; 
+background-color: #ffffff !important;
+color: #000000 !important;
 padding: 1.5rem;
 border-radius: 10px;
 box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-border-left: 6px solid #2c3e50; 
+border-left: 6px solid #2c3e50;
 }
 .references h2 {
 color: #2c3e50 !important;
 font-weight: 600;
 margin-top: 0;
 }
-
 .references a {
 color: #2980b9;
 text-decoration: none;
@@ -4843,20 +4850,18 @@ text-decoration: none;
 .references a:hover {
 text-decoration: underline;
 }
-
 #refs,
 .references,
 .csl-bib-body,
 .csl-entry {
-background-color: #ffffff !important; 
-color: #000000 !important; 
+background-color: #ffffff !important;
+color: #000000 !important;
 box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 border: none !important;
-border-left: 6px solid #2c3e50; 
+border-left: 6px solid #2c3e50;
 padding: 1.5rem;
 border-radius: 10px;
 }
-
 .references h2,
 #references,
 h2#references {
@@ -4867,25 +4872,21 @@ margin-top: 0;
 border: none;
 box-shadow: none;
 }
-
 .references a,
 #refs a,
 .csl-entry a,
 .csl-bib-body a {
-color: #2980b9 !important; 
+color: #2980b9 !important;
 text-decoration: none;
-background: transparent !important; 
+background: transparent !important;
 }
-
 .references a:hover,
 #refs a:hover,
 .csl-entry a:hover,
 .csl-bib-body a:hover {
-background: transparent !important; 
-color: #6cc0e5 !important; 
+background: transparent !important;
+color: #6cc0e5 !important;
 }
-
-
 #refs,
 .references,
 div#refs,
@@ -4899,7 +4900,6 @@ color: #000000 !important;
 box-shadow: none !important;
 border: none !important;
 }
-
 #refs::before,
 .references::before,
 div#refs::before,
@@ -4909,7 +4909,6 @@ div.quarto-appendix::before {
 content: none !important;
 background: none !important;
 }
-
 #references h2,
 .references h2,
 h2#references {
