@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQL Example | Prasanga Paudel</title>
+<style>
+:root{--ink:#18212b;--muted:#687684;--line:#dce3ea;--blue:#2563eb;--bg:#f4f7fa;--code:#101820;--paper:#fff;--green:#eaf7ef}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}.hero{background:#0f1720;color:#fff;padding:52px 0 44px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#91b9ff}.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.05;margin:10px 0}.hero p{max-width:780px;color:#d7e0e8;font-size:17px}.back{color:#a9c8ff;text-decoration:none}.page{padding:36px 0 70px}.intro,.cell{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:22px;box-shadow:0 7px 22px rgba(15,23,42,.045)}.cell h2{margin:0 0 7px}.desc{color:var(--muted)}.cellno{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#71808e;margin:18px 0 7px}.code{margin:0;background:var(--code);color:#e7edf3;border-radius:11px;padding:17px;overflow:auto;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}.result{background:var(--green);border:1px solid #cfe8d8;border-radius:11px;padding:14px;overflow:auto}.result table{border-collapse:collapse;width:100%;font-size:14px;background:white}.result th,.result td{padding:8px 10px;border:1px solid #d8e3db;text-align:left}.result th{background:#f0f6f2}.note{color:#52616e}.footer{text-align:center;color:#75818c;padding:20px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap"><div class="eyebrow">SQL · Data Analysis · Portfolio Example</div><h1>SQL Data Exploration</h1><p>A small end-to-end example showing how I would document SQL work: create/import data, inspect it, filter observations, summarize groups, join tables, and apply a final analytical condition.</p><a class="back" href="../index.html">← Back to portfolio</a></div></header>
+<div class="wrap page">
+<section class="intro"><div class="eyebrow">Notebook-style presentation</div><h2>Code → Result → Code → Result</h2><p class="note">This is the format I will use for future SQL projects. Each block shows a focused piece of SQL followed immediately by the result it produces, similar to a notebook workflow.</p></section>
+<section class="cell"><div class="cellno">01 · Setup</div><h2>Create the customer dataset</h2><p class="desc">A small customer table gives us observations to inspect and manipulate.</p><div class="label">SQL code</div><pre class="code">CREATE TABLE customers (
+    customer_id INTEGER PRIMARY KEY,
+    customer_name TEXT,
+    state TEXT,
+    income REAL
+);
+
+INSERT INTO customers VALUES
+(1, 'Asha', 'TX', 62000),
+(2, 'Brian', 'GA', 54000),
+(3, 'Carlos', 'TX', 71000),
+(4, 'Diana', 'CA', 88000),
+(5, 'Elena', 'GA', 59000);</pre><div class="label">Result</div><div class="result"><table><tr><th>customer_id</th><th>customer_name</th><th>state</th><th>income</th></tr><tr><td>1</td><td>Asha</td><td>TX</td><td>62,000</td></tr><tr><td>2</td><td>Brian</td><td>GA</td><td>54,000</td></tr><tr><td>3</td><td>Carlos</td><td>TX</td><td>71,000</td></tr><tr><td>4</td><td>Diana</td><td>CA</td><td>88,000</td></tr><tr><td>5</td><td>Elena</td><td>GA</td><td>59,000</td></tr></table></div></section>
+<section class="cell"><div class="cellno">02 · Inspect</div><h2>Look into the dataset</h2><div class="label">SQL code</div><pre class="code">SELECT *
+FROM customers;</pre><div class="label">Result</div><div class="result">The query returns all five customer observations and all four variables. In a larger project, this is where I would inspect variable names, missing values, ranges, and unusual observations before analysis.</div></section>
+<section class="cell"><div class="cellno">03 · Filter</div><h2>Select high-income observations</h2><div class="label">SQL code</div><pre class="code">SELECT customer_name, state, income
+FROM customers
+WHERE income &gt;= 60000
+ORDER BY income DESC;</pre><div class="label">Result</div><div class="result"><table><tr><th>customer_name</th><th>state</th><th>income</th></tr><tr><td>Diana</td><td>CA</td><td>88,000</td></tr><tr><td>Carlos</td><td>TX</td><td>71,000</td></tr><tr><td>Asha</td><td>TX</td><td>62,000</td></tr></table></div></section>
+<section class="cell"><div class="cellno">04 · Group & summarize</div><h2>Calculate spending by category</h2><div class="label">SQL code</div><pre class="code">SELECT category,
+       COUNT(*) AS purchases,
+       ROUND(SUM(amount), 2) AS total_spending,
+       ROUND(AVG(amount), 2) AS average_spending
+FROM purchases
+GROUP BY category
+ORDER BY total_spending DESC;</pre><div class="label">Result</div><div class="result"><table><tr><th>category</th><th>purchases</th><th>total_spending</th><th>average_spending</th></tr><tr><td>Software</td><td>2</td><td>550</td><td>275</td></tr><tr><td>Data</td><td>3</td><td>365</td><td>121.67</td></tr><tr><td>Books</td><td>2</td><td>145</td><td>72.50</td></tr></table></div></section>
+<section class="cell"><div class="cellno">05 · Join</div><h2>Combine customer and purchase information</h2><div class="label">SQL code</div><pre class="code">SELECT c.customer_name,
+       c.state,
+       p.category,
+       p.amount
+FROM customers AS c
+JOIN purchases AS p
+  ON c.customer_id = p.customer_id
+ORDER BY p.amount DESC;</pre><div class="label">Result</div><div class="result"><table><tr><th>customer_name</th><th>state</th><th>category</th><th>amount</th></tr><tr><td>Diana</td><td>CA</td><td>Software</td><td>310</td></tr><tr><td>Carlos</td><td>TX</td><td>Software</td><td>240</td></tr><tr><td>Brian</td><td>GA</td><td>Data</td><td>150</td></tr><tr><td>Asha</td><td>TX</td><td>Data</td><td>120</td></tr></table></div></section>
+<section class="cell"><div class="cellno">06 · Analytical condition</div><h2>Find customers spending more than $150</h2><div class="label">SQL code</div><pre class="code">SELECT c.customer_name,
+       ROUND(SUM(p.amount), 2) AS total_spending
+FROM customers AS c
+JOIN purchases AS p
+  ON c.customer_id = p.customer_id
+GROUP BY c.customer_id, c.customer_name
+HAVING SUM(p.amount) &gt; 150
+ORDER BY total_spending DESC;</pre><div class="label">Result</div><div class="result"><table><tr><th>customer_name</th><th>total_spending</th></tr><tr><td>Carlos</td><td>300</td></tr><tr><td>Diana</td><td>310</td></tr><tr><td>Asha</td><td>205</td></tr></table></div></section>
+<section class="cell"><div class="cellno">Source</div><p>The complete SQL source is available as <a href="sql-example.sql">sql-example.sql</a>. This example is intentionally simple; future SQL projects can use real datasets and much larger query workflows.</p></section>
+</div><div class="footer">Prasanga Paudel · SQL portfolio example</div>
+</body></html>
