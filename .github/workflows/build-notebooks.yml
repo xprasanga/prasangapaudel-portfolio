@@ -25,8 +25,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy matplotlib seaborn jupyter nbformat nbclient nbconvert
 
-      - name: Execute and render notebooks
+      - name: Execute existing portfolio builds
         run: python tools/build_portfolio_notebooks.py
+
+      - name: Build the notebook-style manuscript visualization
+        run: |
+          python tools/build_python_manuscript_notebook.py
+          python -m jupyter nbconvert --to html --output-dir manuscript-visualization manuscript-visualization/manuscript_visualization.ipynb
 
       - name: Publish generated notebook outputs
         run: |
