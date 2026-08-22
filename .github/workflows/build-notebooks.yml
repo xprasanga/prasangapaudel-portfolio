@@ -1,4 +1,4 @@
-name: Build executable portfolio notebooks
+name: Build and publish executable portfolio notebooks
 
 on:
   push:
@@ -15,6 +15,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -25,22 +28,23 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy matplotlib seaborn jupyter nbformat nbclient nbconvert
 
-      - name: Execute existing portfolio builds
+      - name: Build executable portfolio notebooks and SQL examples
         run: python tools/build_portfolio_notebooks.py
 
-      - name: Build the notebook-style manuscript visualization
-        run: |
-          python tools/build_python_manuscript_notebook.py
-          python -m jupyter nbconvert --to html --output-dir manuscript-visualization manuscript-visualization/manuscript_visualization.ipynb
+      - name: Build the real Python Jupyter notebook
+        run: python tools/build_python_manuscript_notebook.py
+
+      - name: Render the Quarto website
+        run: quarto render
 
       - name: Publish generated notebook outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add manuscript-visualization/manuscript_visualization.ipynb manuscript-visualization/manuscript_visualization.html sql-projects/SQL_Data_Exploration.ipynb sql-projects/SQL_Data_Exploration.html sql-projects/database/sakila_portfolio.sqlite sql-projects/sql-exploration-queries.sql sql-projects/README.md
+          git add docs manuscript-visualization/manuscript_visualization.ipynb sql-projects/SQL_Data_Exploration.ipynb sql-projects/SQL_Data_Exploration.html sql-projects/database/sakila_portfolio.sqlite sql-projects/sql-exploration-queries.sql sql-projects/README.md
           if git diff --cached --quiet; then
             echo "No generated changes to publish."
             exit 0
           fi
-          git commit -m "Build executed Python and SQL portfolio notebooks [skip ci]"
+          git commit -m "Render Quarto site with executable Python notebook [skip ci]"
           git push
