@@ -13,7 +13,7 @@ website:
         file: aboutme.qmd
       - text: "Projects"
         menu:
-          - text: "Python Manuscript Notebook"
+          - text: "Python Analysis"
             file: manuscript-visualization/manuscript_visualization.ipynb
           - text: "Presentation Exercise"
             file: presentation-exercise/presentation-exercise.qmd
