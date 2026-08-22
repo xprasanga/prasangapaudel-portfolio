@@ -22,7 +22,7 @@ website:
           - text: "Machine Learning"
             file: ml-models-exercise/ml-models-exercise.qmd
           - text: "Tidy Tuesday Exercise"
-            file: tidytuesday-exercise/metrics.qmd
+            file: tidytuesday-exercise/tidytuesday-exercise.qmd
           - text: "Shopping Behavior"
             file: metrics-exercise/metrics.qmd
           - text: "Milk Elasticity"
