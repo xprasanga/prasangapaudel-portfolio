@@ -14,7 +14,7 @@ website:
       - text: "Projects"
         menu:
           - text: "Python Analysis"
-            file: manuscript-visualization/manuscript_visualization.ipynb
+            href: manuscript-visualization/manuscript_visualization.html
           - text: "Presentation Exercise"
             file: presentation-exercise/presentation-exercise.qmd
           - text: "Model Fitting Exercise"
@@ -22,7 +22,7 @@ website:
           - text: "Machine Learning"
             file: ml-models-exercise/ml-models-exercise.qmd
           - text: "Tidy Tuesday Exercise"
-            file: tidytuesday-exercise/tidytuesday-exercise.qmd
+            file: tidytuesday-exercise/metrics.qmd
           - text: "Shopping Behavior"
             file: metrics-exercise/metrics.qmd
           - text: "Milk Elasticity"
