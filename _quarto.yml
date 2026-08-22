@@ -1,9 +1,7 @@
 project:
   type: website
-  output-dir: .
+  output-dir: docs
   render:
-    - "index.qmd"
-    - "aboutme.qmd"
     - "**/*.qmd"
     - "manuscript-visualization/manuscript_visualization.ipynb"
 
