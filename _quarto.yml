@@ -3,7 +3,7 @@ project:
   output-dir: docs
   render:
     - "**/*.qmd"
-    - "manuscript-visualization/manuscript_visualization.ipynb"
+    - "manuscript-visualization/python_analysis.ipynb"
 
 website:
   title: "Prasanga Paudel's Data Analysis Portfolio"
@@ -13,8 +13,8 @@ website:
         file: aboutme.qmd
       - text: "Projects"
         menu:
-          - text: "Python Manuscript Notebook"
-            file: manuscript-visualization/manuscript_visualization.ipynb
+          - text: "Python Analysis"
+            file: manuscript-visualization/python_analysis.ipynb
           - text: "Presentation Exercise"
             file: presentation-exercise/presentation-exercise.qmd
           - text: "Model Fitting Exercise"
