@@ -1,0 +1,119 @@
+---
+title: "Retail Sales Analysis"
+author: "Prasanga Paudel"
+format:
+  html:
+    toc: false
+    code-fold: false
+jupyter: python3
+---
+
+# Retail Sales Analysis
+
+This is a small demonstration SQL project for the portfolio. It uses a retail-style relational database to demonstrate the workflow **question → SQL query → result → interpretation**.
+
+> **Demo project:** The data are synthetic and are intended only to demonstrate presentation and workflow.
+
+## 1. Database structure
+
+The database contains four related tables:
+
+- `customers` — customer information and signup dates
+- `products` — product names, categories, and prices
+- `orders` — customer purchases and dates
+- `order_items` — products and quantities within each order
+
+The schema is available in [`database/retail_schema.sql`](database/retail_schema.sql).
+
+## 2. How many customers are in the database?
+
+### SQL query
+
+```sql
+SELECT COUNT(*) AS total_customers
+FROM customers;
+```
+
+### Result
+
+| total_customers |
+|---:|
+| 50 |
+
+The demonstration database contains **50 customers**.
+
+## 3. Which products generate the most revenue?
+
+### SQL query
+
+```sql
+SELECT
+    p.product_name,
+    p.category,
+    SUM(oi.quantity) AS units_sold,
+    ROUND(SUM(oi.quantity * p.price), 2) AS revenue
+FROM order_items AS oi
+JOIN products AS p
+    ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_name, p.category
+ORDER BY revenue DESC
+LIMIT 5;
+```
+
+### Result
+
+| product | category | units sold | revenue |
+|---|---|---:|---:|
+| Laptop | Electronics | 43 | $38,657 |
+| Office Chair | Home | 37 | $9,213 |
+| Running Shoes | Apparel | 52 | $5,720 |
+| Headphones | Electronics | 41 | $5,289 |
+| Coffee Maker | Home | 47 | $4,183 |
+
+The laptop is the strongest revenue-generating product in this synthetic example, illustrating how SQL joins and aggregation can turn transaction-level records into business-level insights.
+
+## 4. Which customers spend the most?
+
+### SQL query
+
+```sql
+SELECT
+    c.customer_name,
+    c.city,
+    ROUND(SUM(oi.quantity * p.price), 2) AS total_spending
+FROM customers AS c
+JOIN orders AS o
+    ON c.customer_id = o.customer_id
+JOIN order_items AS oi
+    ON o.order_id = oi.order_id
+JOIN products AS p
+    ON oi.product_id = p.product_id
+GROUP BY c.customer_id, c.customer_name, c.city
+ORDER BY total_spending DESC
+LIMIT 10;
+```
+
+### Result
+
+| customer | city | total spending |
+|---|---|---:|
+| Customer 014 | Dallas | $3,472 |
+| Customer 037 | Austin | $3,215 |
+| Customer 008 | Lubbock | $3,106 |
+| Customer 041 | Houston | $2,984 |
+| Customer 022 | Dallas | $2,841 |
+
+This query demonstrates a common relational workflow: joining customer, order, order-item, and product tables before aggregating spending at the customer level.
+
+## 5. What does the SQL workflow demonstrate?
+
+This small project demonstrates several core SQL skills:
+
+1. **Filtering and aggregation** with `COUNT()`, `SUM()`, and `GROUP BY`.
+2. **Relational joins** using customer, order, and product keys.
+3. **Sorting and ranking** with `ORDER BY` and `LIMIT`.
+4. **Business interpretation** of query results rather than simply displaying code.
+
+## Next step
+
+For the final portfolio version, this demonstration can be replaced with a real dataset and expanded with executable query cells, interactive tables, and visualizations while keeping the same notebook-style presentation.
