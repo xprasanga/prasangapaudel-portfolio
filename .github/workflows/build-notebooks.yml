@@ -1,4 +1,4 @@
-name: Build and publish executable portfolio notebooks
+name: Build Python Quarto notebook site
 
 on:
   push:
@@ -23,28 +23,25 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install notebook dependencies
+      - name: Install Python notebook dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install pandas numpy matplotlib seaborn jupyter nbformat nbclient nbconvert
 
-      - name: Build executable portfolio notebooks and SQL examples
-        run: python tools/build_portfolio_notebooks.py
-
-      - name: Build the real Python Jupyter notebook
+      - name: Build and execute the single Python notebook
         run: python tools/build_python_manuscript_notebook.py
 
       - name: Render the Quarto website
         run: quarto render
 
-      - name: Publish generated notebook outputs
+      - name: Publish generated notebook and website
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs manuscript-visualization/manuscript_visualization.ipynb sql-projects/SQL_Data_Exploration.ipynb sql-projects/SQL_Data_Exploration.html sql-projects/database/sakila_portfolio.sqlite sql-projects/sql-exploration-queries.sql sql-projects/README.md
+          git add docs manuscript-visualization/python_analysis.ipynb
           if git diff --cached --quiet; then
             echo "No generated changes to publish."
             exit 0
           fi
-          git commit -m "Render Quarto site with executable Python notebook [skip ci]"
+          git commit -m "Publish Python analysis as a Quarto notebook [skip ci]"
           git push
