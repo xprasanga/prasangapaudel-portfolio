@@ -20,8 +20,8 @@ SCRIPTS = [
 def top_level_chunks(source: str, max_nodes: int = 3):
     """Split real Python source into executable notebook cells without replacing it with %run calls.
 
-    The source text is preserved exactly; cells are simply grouped at top-level Python
-    statement boundaries so the presentation reads like a Colab/Jupyter analysis.
+    The source text is preserved exactly; cells are grouped at top-level Python
+    statement boundaries so the presentation reads like a Jupyter/Colab analysis.
     """
     tree = ast.parse(source)
     nodes = tree.body
@@ -60,10 +60,28 @@ nb.metadata = {
     "language_info": {"name": "python"},
 }
 
+# Quarto reads this first raw cell as document metadata. The notebook is
+# executed below by nbclient, then Quarto renders the saved outputs as a
+# normal notebook-style web page.
+nb.cells.append(nbf.v4.new_raw_cell(
+    "---\n"
+    "title: \"Public Support for Gasoline Taxes to Finance Renewable Energy\"\n"
+    "subtitle: \"The Role of Informational Framing and Fuel Prices\"\n"
+    "author: \"Prasanga Paudel\"\n"
+    "jupyter: python3\n"
+    "format:\n"
+    "  html:\n"
+    "    code-fold: false\n"
+    "    code-tools: true\n"
+    "    toc: true\n"
+    "    page-layout: article\n"
+    "execute:\n"
+    "  enabled: false\n"
+    "---"
+))
+
 nb.cells.append(nbf.v4.new_markdown_cell(
-    "# Public Support for Gasoline Taxes to Finance Renewable Energy\n"
-    "## The Role of Informational Framing and Fuel Prices\n\n"
-    "### Manuscript Visualization Notebook\n\n"
+    "# Manuscript Visualization Notebook\n\n"
     "This is the executed Python presentation of the manuscript visualizations. "
     "Each project is organized as a research notebook: **explanation → actual Python code → actual output → next code cell → next output**. "
     "The code shown below is the source contained in the corresponding `.py` files; there are no `%run` or placeholder cells."
@@ -88,7 +106,7 @@ for section, (filename, title) in enumerate(SCRIPTS, 1):
 nb.cells.append(nbf.v4.new_markdown_cell(
     "## Reproducibility notes\n\n"
     "The `.py` files remain the reusable source files. This `.ipynb` is the presentation and execution record. "
-    "The GitHub Actions workflow executes the notebook and exports the resulting document to HTML, preserving code cells and their outputs."
+    "The GitHub Actions workflow executes the notebook and Quarto renders the saved notebook as the published HTML page."
 ))
 
 # Execute from the manuscript directory so relative file references behave naturally.
