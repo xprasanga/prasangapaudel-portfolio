@@ -894,5 +894,54 @@
     "title": "tidytuesday Exercise",
     "section": "8.3 Random Forest (Test dataset)",
     "text": "8.3 Random Forest (Test dataset)\nFinally, we will perfom the Random Forest prediction on the test dataset as well. As with OLS prediction and LASSO prediction, we will use the estimated model from the train dataset to predict using the test dataset and calculate the performance metrices.\n\n#  predictions \nrf_results_test &lt;- test_data %&gt;% \n  bind_cols(predict(rf_fit, new_data = test_data))\n\nrf_metrics_test &lt;- rf_results_test %&gt;% \n  metrics(truth = score, estimate = .pred)\n\nprint(rf_metrics_test)\n\n# A tibble: 3 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 rmse    standard      52.6  \n2 rsq     standard       0.776\n3 mae     standard      24.9  \n\n\nWe can observe that the RMSE value for the random forest is even bigger, increasing by almost 100%, the R-squared value has also decreased.\nLet’s also observe the model fit graphically for the test dataset.\n\n# Observed vs Predicted plot\nggplot(rf_results_test, aes(x = score, y = .pred)) +\n  geom_point(alpha = 0.6, color = \"darkgreen\") +\n  geom_abline(slope = 1, linetype = \"dashed\", color = \"red\") +\n  labs(title = \"Random Forest: Observed vs Predicted\",\n       x = \"Actual Score\", y = \"Predicted Score\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nWe can observe that the random model also shows agood fit for the datapoints.\nNow, to summarize, let’s tabulte the performance of all three models.\n\n#comparing all three models\nbind_rows(\n  linear_reg = test_metrics,\n  lasso = lasso_metrics_test,\n  random_forest = rf_metrics_test,\n  .id = \"model\"\n) %&gt;% \n  select(model, .metric, .estimate) %&gt;% \n  pivot_wider(names_from = .metric, values_from = .estimate)\n\n# A tibble: 3 × 4\n  model          rmse   rsq   mae\n  &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 linear_reg     46.7 0.820  26.9\n2 lasso          46.9 0.819  26.7\n3 random_forest  52.6 0.776  24.9"
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html",
+    "href": "sql-projects/sql-analysis.html",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "This is a small demonstration SQL project for the portfolio. It uses a retail-style relational database to demonstrate the workflow question → SQL query → result → interpretation.\n\nDemo project: The data are synthetic and are intended only to demonstrate presentation and workflow.\n\n\n\nThe database contains four related tables:\n\ncustomers — customer information and signup dates\nproducts — product names, categories, and prices\norders — customer purchases and dates\norder_items — products and quantities within each order\n\nThe schema is available in database/retail_schema.sql.\n\n\n\n\n\nSELECT COUNT(*) AS total_customers\nFROM customers;\n\n\n\n\n\n\ntotal_customers\n\n\n\n\n50\n\n\n\nThe demonstration database contains 50 customers.\n\n\n\n\n\n\nSELECT\n    p.product_name,\n    p.category,\n    SUM(oi.quantity) AS units_sold,\n    ROUND(SUM(oi.quantity * p.price), 2) AS revenue\nFROM order_items AS oi\nJOIN products AS p\n    ON oi.product_id = p.product_id\nGROUP BY p.product_id, p.product_name, p.category\nORDER BY revenue DESC\nLIMIT 5;\n\n\n\n\n\n\nproduct\ncategory\nunits sold\nrevenue\n\n\n\n\nLaptop\nElectronics\n43\n$38,657\n\n\nOffice Chair\nHome\n37\n$9,213\n\n\nRunning Shoes\nApparel\n52\n$5,720\n\n\nHeadphones\nElectronics\n41\n$5,289\n\n\nCoffee Maker\nHome\n47\n$4,183\n\n\n\nThe laptop is the strongest revenue-generating product in this synthetic example, illustrating how SQL joins and aggregation can turn transaction-level records into business-level insights.\n\n\n\n\n\n\nSELECT\n    c.customer_name,\n    c.city,\n    ROUND(SUM(oi.quantity * p.price), 2) AS total_spending\nFROM customers AS c\nJOIN orders AS o\n    ON c.customer_id = o.customer_id\nJOIN order_items AS oi\n    ON o.order_id = oi.order_id\nJOIN products AS p\n    ON oi.product_id = p.product_id\nGROUP BY c.customer_id, c.customer_name, c.city\nORDER BY total_spending DESC\nLIMIT 10;\n\n\n\n\n\n\ncustomer\ncity\ntotal spending\n\n\n\n\nCustomer 014\nDallas\n$3,472\n\n\nCustomer 037\nAustin\n$3,215\n\n\nCustomer 008\nLubbock\n$3,106\n\n\nCustomer 041\nHouston\n$2,984\n\n\nCustomer 022\nDallas\n$2,841\n\n\n\nThis query demonstrates a common relational workflow: joining customer, order, order-item, and product tables before aggregating spending at the customer level.\n\n\n\n\nThis small project demonstrates several core SQL skills:\n\nFiltering and aggregation with COUNT(), SUM(), and GROUP BY.\nRelational joins using customer, order, and product keys.\nSorting and ranking with ORDER BY and LIMIT.\nBusiness interpretation of query results rather than simply displaying code.\n\n\n\n\nFor the final portfolio version, this demonstration can be replaced with a real dataset and expanded with executable query cells, interactive tables, and visualizations while keeping the same notebook-style presentation."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#database-structure",
+    "href": "sql-projects/sql-analysis.html#database-structure",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "The database contains four related tables:\n\ncustomers — customer information and signup dates\nproducts — product names, categories, and prices\norders — customer purchases and dates\norder_items — products and quantities within each order\n\nThe schema is available in database/retail_schema.sql."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#how-many-customers-are-in-the-database",
+    "href": "sql-projects/sql-analysis.html#how-many-customers-are-in-the-database",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "SELECT COUNT(*) AS total_customers\nFROM customers;\n\n\n\n\n\n\ntotal_customers\n\n\n\n\n50\n\n\n\nThe demonstration database contains 50 customers."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#which-products-generate-the-most-revenue",
+    "href": "sql-projects/sql-analysis.html#which-products-generate-the-most-revenue",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "SELECT\n    p.product_name,\n    p.category,\n    SUM(oi.quantity) AS units_sold,\n    ROUND(SUM(oi.quantity * p.price), 2) AS revenue\nFROM order_items AS oi\nJOIN products AS p\n    ON oi.product_id = p.product_id\nGROUP BY p.product_id, p.product_name, p.category\nORDER BY revenue DESC\nLIMIT 5;\n\n\n\n\n\n\nproduct\ncategory\nunits sold\nrevenue\n\n\n\n\nLaptop\nElectronics\n43\n$38,657\n\n\nOffice Chair\nHome\n37\n$9,213\n\n\nRunning Shoes\nApparel\n52\n$5,720\n\n\nHeadphones\nElectronics\n41\n$5,289\n\n\nCoffee Maker\nHome\n47\n$4,183\n\n\n\nThe laptop is the strongest revenue-generating product in this synthetic example, illustrating how SQL joins and aggregation can turn transaction-level records into business-level insights."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#which-customers-spend-the-most",
+    "href": "sql-projects/sql-analysis.html#which-customers-spend-the-most",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "SELECT\n    c.customer_name,\n    c.city,\n    ROUND(SUM(oi.quantity * p.price), 2) AS total_spending\nFROM customers AS c\nJOIN orders AS o\n    ON c.customer_id = o.customer_id\nJOIN order_items AS oi\n    ON o.order_id = oi.order_id\nJOIN products AS p\n    ON oi.product_id = p.product_id\nGROUP BY c.customer_id, c.customer_name, c.city\nORDER BY total_spending DESC\nLIMIT 10;\n\n\n\n\n\n\ncustomer\ncity\ntotal spending\n\n\n\n\nCustomer 014\nDallas\n$3,472\n\n\nCustomer 037\nAustin\n$3,215\n\n\nCustomer 008\nLubbock\n$3,106\n\n\nCustomer 041\nHouston\n$2,984\n\n\nCustomer 022\nDallas\n$2,841\n\n\n\nThis query demonstrates a common relational workflow: joining customer, order, order-item, and product tables before aggregating spending at the customer level."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#what-does-the-sql-workflow-demonstrate",
+    "href": "sql-projects/sql-analysis.html#what-does-the-sql-workflow-demonstrate",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "This small project demonstrates several core SQL skills:\n\nFiltering and aggregation with COUNT(), SUM(), and GROUP BY.\nRelational joins using customer, order, and product keys.\nSorting and ranking with ORDER BY and LIMIT.\nBusiness interpretation of query results rather than simply displaying code."
+  },
+  {
+    "objectID": "sql-projects/sql-analysis.html#next-step",
+    "href": "sql-projects/sql-analysis.html#next-step",
+    "title": "Retail Sales Analysis",
+    "section": "",
+    "text": "For the final portfolio version, this demonstration can be replaced with a real dataset and expanded with executable query cells, interactive tables, and visualizations while keeping the same notebook-style presentation."
   }
 ]
